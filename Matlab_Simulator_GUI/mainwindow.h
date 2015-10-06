@@ -56,6 +56,8 @@ private:
     char line[256];
     TCPConnector* connector;
     TCPStream* stream;
+    bool isNodeIdCorrect, isRefRateCorrect;
+    QString text, refRateText;
 };
 
 #endif // MAINWINDOW_H

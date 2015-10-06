@@ -26,289 +26,433 @@ void MainWindow::delay(unsigned long ms )
 
 void MainWindow::on_pushButton_Reset_clicked()
 {
+    isNodeIdCorrect = false;
+    text = ui->lineEdit_NodeId->text();
+
     d_reset.Parse(reset_json);
 
-    QString text = ui->lineEdit_NodeId->text();
     Value& id = d_reset["NodeID"];
 
     if (text == "11")
-        id.SetString("SensDug11");
-
-    if (text == "12")
-        id.SetString("SensDug12");
-
-    if (text == "13")
-        id.SetString("SensDug13");
-
-    if (text == "15")
-        id.SetString("SensDug15");
-
-    if (text == "16")
-        id.SetString("SensDug16");
-
-    if (text == "25")
-        id.SetString("SensDug25");
-
-    if (text == "26")
-        id.SetString("SensDug26");
-
-    Writer<StringBuffer> writer_reset(buf_reset);
-    d_reset.Accept(writer_reset);
-
-    cout << buf_reset.GetString() << endl;
-
-    connector = new TCPConnector();
-
-    //char** av = get_main_argv_temp();
-    QStringList arguments = qApp->arguments();
-
-    stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
-
-    if(stream)
     {
-        message = buf_reset.GetString();
-        stream->send(message.c_str(), message.size());
-        printf("sent - %s\n", message.c_str());
-        len = stream->receive(line, sizeof(line));
-        line[len] = 0;
-        QMessageBox::information(this, " Response Message from the Node", line);
-        printf("received - %s\n", line);
-        delete stream;
-        buf_reset.Clear();
-        delay(100);	// 100ms
+        isNodeIdCorrect = true;
+        id.SetString("SensDug11");
     }
-    delete connector;
+    else if (text == "12")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug12");
+    }
+    else if (text == "13")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug13");
+    }
+    else if (text == "15")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug15");
+    }
+    else if (text == "16")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug16");
+    }
+    else if (text == "25")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug25");
+    }
+    else if (text == "26")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug26");
+    }
+    else
+    {
+        isNodeIdCorrect = false;
+        QMessageBox::warning(this,"Input Error", "Invalid NodeID!");
+    }
+
+    if (isNodeIdCorrect)
+    {
+        Writer<StringBuffer> writer_reset(buf_reset);
+        d_reset.Accept(writer_reset);
+
+        cout << buf_reset.GetString() << endl;
+
+        connector = new TCPConnector();
+
+        //char** av = get_main_argv_temp();
+        QStringList arguments = qApp->arguments();
+
+        stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
+
+        if(stream)
+        {
+            message = buf_reset.GetString();
+            stream->send(message.c_str(), message.size());
+            printf("sent - %s\n", message.c_str());
+            len = stream->receive(line, sizeof(line));
+            line[len] = 0;
+            QMessageBox::information(this, " Response Message from the Node", line);
+            printf("received - %s\n", line);
+            delete stream;
+            buf_reset.Clear();
+            delay(100);	// 100ms
+        }
+        delete connector;
+        isNodeIdCorrect = false;
+    }
 }
 
 void MainWindow::on_pushButton_SetRefreshRate_clicked()
 {
+    isNodeIdCorrect = false;
+    text = ui->lineEdit_NodeId->text();
+
     d_refresh_rate.Parse(refresh_rate_json);
 
-    QString text1 = ui->lineEdit_NodeId->text();
     Value& id = d_refresh_rate["NodeID"];
 
-    if (text1 == "11")
+    if (text == "11")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug11");
-
-    if (text1 == "12")
+    }
+    else if (text == "12")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug12");
-
-    if (text1 == "13")
+    }
+    else if (text == "13")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug13");
-
-    if (text1 == "15")
+    }
+    else if (text == "15")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug15");
-
-    if (text1 == "16")
+    }
+    else if (text == "16")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug16");
-
-    if (text1 == "25")
+    }
+    else if (text == "25")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug25");
-
-    if (text1 == "26")
+    }
+    else if (text == "26")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug26");
-
-    QString text2 = ui->lineEdit_RefRate->text();
-    Value& refRate = d_refresh_rate["Ref Rate"];
-
-    refRate.SetInt(text2.toInt());
-
-    Writer<StringBuffer> writer_refresh_rate(buf_refresh_rate);
-    d_refresh_rate.Accept(writer_refresh_rate);
-
-    cout << buf_refresh_rate.GetString() << endl;
-
-    connector = new TCPConnector();
-
-    //char** av = get_main_argv_temp();
-    QStringList arguments = qApp->arguments();
-
-    stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
-
-    if (stream) {
-        message = buf_refresh_rate.GetString();
-        stream->send(message.c_str(), message.size());
-        printf("sent - %s\n", message.c_str());
-        len = stream->receive(line, sizeof(line));
-        QMessageBox::information(this, " Response Message from the Node", line);
-        line[len] = 0;
-        printf("received - %s\n", line);
-        delete stream;
-        buf_refresh_rate.Clear();
-        delay(100);	// 100ms
+    }
+    else
+    {
+        isNodeIdCorrect = false;
+        QMessageBox::warning(this,"Input Error", "Invalid NodeID!");
     }
 
-    delete connector;
+    refRateText = ui->lineEdit_RefRate->text();
+    Value& refRate = d_refresh_rate["Ref Rate"];
+
+    if(refRateText.toInt() >= 0 && refRateText.toInt() < 100000)
+    {
+        isRefRateCorrect = true;
+        refRate.SetInt(refRateText.toInt());
+    }
+    else
+    {
+        isRefRateCorrect = false;
+        QMessageBox::warning(this,"Input Error", "Invalid Refresh Rate Value!");
+    }
+
+
+    if (isNodeIdCorrect && isRefRateCorrect)
+    {
+
+        Writer<StringBuffer> writer_refresh_rate(buf_refresh_rate);
+        d_refresh_rate.Accept(writer_refresh_rate);
+
+        cout << buf_refresh_rate.GetString() << endl;
+
+        connector = new TCPConnector();
+
+        //char** av = get_main_argv_temp();
+        QStringList arguments = qApp->arguments();
+
+        stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
+
+
+        if (stream) {
+            message = buf_refresh_rate.GetString();
+            stream->send(message.c_str(), message.size());
+            printf("sent - %s\n", message.c_str());
+            len = stream->receive(line, sizeof(line));
+            QMessageBox::information(this, " Response Message from the Node", line);
+            line[len] = 0;
+            printf("received - %s\n", line);
+            delete stream;
+            buf_refresh_rate.Clear();
+            delay(100);	// 100ms
+        }
+        delete connector;
+        isNodeIdCorrect = false;
+        isRefRateCorrect = false;
+    }
 
 }
 
 void MainWindow::on_pushButton_GetRefreshRate_clicked()
 {
+    isNodeIdCorrect = false;
+    text = ui->lineEdit_NodeId->text();
 
     d_refresh_rate.Parse(refresh_rate_json);
 
-    QString text = ui->lineEdit_NodeId->text();
     Value& id = d_refresh_rate["NodeID"];
 
     if (text == "11")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug11");
-
-    if (text == "12")
+    }
+    else if (text == "12")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug12");
-
-    if (text == "13")
+    }
+    else if (text == "13")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug13");
-
-    if (text == "15")
+    }
+    else if (text == "15")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug15");
-
-    if (text == "16")
+    }
+    else if (text == "16")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug16");
-
-    if (text == "25")
+    }
+    else if (text == "25")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug25");
-
-    if (text == "26")
+    }
+    else if (text == "26")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug26");
-
-    Value& temp_refresh_rate = d_refresh_rate["Ref Rate"];
-    temp_refresh_rate.SetString("-1");
-
-    Writer<StringBuffer> writer_refresh_rate(buf_refresh_rate);
-    d_refresh_rate.Accept(writer_refresh_rate);
-
-    cout << buf_refresh_rate.GetString() << endl;
-
-    connector = new TCPConnector();
-
-    //char** av = get_main_argv_temp();
-    QStringList arguments = qApp->arguments();
-
-    stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
-
-    if (stream) {
-        message = buf_refresh_rate.GetString();
-        stream->send(message.c_str(), message.size());
-        printf("sent - %s\n", message.c_str());
-        len = stream->receive(line, sizeof(line));
-        QMessageBox::information(this, " Response Message from the Node", line);
-        line[len] = 0;
-        printf("received - %s\n", line);
-        delete stream;
-        buf_refresh_rate.Clear();
-        delay(100);	// 100ms
+    }
+    else
+    {
+        isNodeIdCorrect = false;
+        QMessageBox::warning(this,"Input Error", "Invalid NodeID!");
     }
 
-    delete connector;
+    if (isNodeIdCorrect)
+    {
+
+        Value& temp_refresh_rate = d_refresh_rate["Ref Rate"];
+        temp_refresh_rate.SetString("-1");
+
+        Writer<StringBuffer> writer_refresh_rate(buf_refresh_rate);
+        d_refresh_rate.Accept(writer_refresh_rate);
+
+        cout << buf_refresh_rate.GetString() << endl;
+
+        connector = new TCPConnector();
+
+        //char** av = get_main_argv_temp();
+        QStringList arguments = qApp->arguments();
+
+        stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
+
+        if (stream) {
+            message = buf_refresh_rate.GetString();
+            stream->send(message.c_str(), message.size());
+            printf("sent - %s\n", message.c_str());
+            len = stream->receive(line, sizeof(line));
+            QMessageBox::information(this, " Response Message from the Node", line);
+            line[len] = 0;
+            printf("received - %s\n", line);
+            delete stream;
+            buf_refresh_rate.Clear();
+            delay(100);	// 100ms
+        }
+
+        delete connector;
+        isNodeIdCorrect = false;
+    }
 }
 
 void MainWindow::on_pushButton_Alive_clicked()
 {
+    isNodeIdCorrect = false;
+    text = ui->lineEdit_NodeId->text();
+
     d_alive.Parse(alive_json);
 
-    QString text = ui->lineEdit_NodeId->text();
     Value& id = d_alive["NodeID"];
 
     if (text == "11")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug11");
-
-    if (text == "12")
-        id.SetString("SensDug12");
-
-    if (text == "13")
-        id.SetString("SensDug13");
-
-    if (text == "15")
-        id.SetString("SensDug15");
-
-    if (text == "16")
-        id.SetString("SensDug16");
-
-    if (text == "25")
-        id.SetString("SensDug25");
-
-    if (text == "26")
-        id.SetString("SensDug26");
-
-    Writer<StringBuffer> writer_alive(buf_alive);
-    d_alive.Accept(writer_alive);
-
-    cout << buf_alive.GetString() << endl;
-
-    connector = new TCPConnector();
-
-    //char** av = get_main_argv_temp();
-    QStringList arguments = qApp->arguments();
-
-    stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
-
-    if (stream) {
-        message = buf_alive.GetString();
-        stream->send(message.c_str(), message.size());
-        printf("sent - %s\n", message.c_str());
-        len = stream->receive(line, sizeof(line));
-        QMessageBox::information(this, " Response Message from the Node", line);
-        line[len] = 0;
-        printf("received - %s\n", line);
-        delete stream;
-        buf_alive.Clear();
-        delay(100);	// 100ms
     }
-    delete connector;
+    else if (text == "12")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug12");
+    }
+    else if (text == "13")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug13");
+    }
+    else if (text == "15")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug15");
+    }
+    else if (text == "16")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug16");
+    }
+    else if (text == "25")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug25");
+    }
+    else if (text == "26")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug26");
+    }
+    else
+    {
+        isNodeIdCorrect = false;
+        QMessageBox::warning(this,"Input Error", "Invalid NodeID!");
+    }
+
+    if (isNodeIdCorrect)
+    {
+
+        Writer<StringBuffer> writer_alive(buf_alive);
+        d_alive.Accept(writer_alive);
+
+        cout << buf_alive.GetString() << endl;
+
+        connector = new TCPConnector();
+
+        //char** av = get_main_argv_temp();
+        QStringList arguments = qApp->arguments();
+
+        stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
+
+        if (stream) {
+            message = buf_alive.GetString();
+            stream->send(message.c_str(), message.size());
+            printf("sent - %s\n", message.c_str());
+            len = stream->receive(line, sizeof(line));
+            QMessageBox::information(this, " Response Message from the Node", line);
+            line[len] = 0;
+            printf("received - %s\n", line);
+            delete stream;
+            buf_alive.Clear();
+            delay(100);	// 100ms
+        }
+        delete connector;
+        isNodeIdCorrect = false;
+    }
 
 }
 
 void MainWindow::on_pushButton_GetNetStatus_clicked()
 {
+    isNodeIdCorrect = false;
+    text = ui->lineEdit_NodeId->text();
+
     d_net_status.Parse(net_status_json);
 
-    QString text = ui->lineEdit_NodeId->text();
     Value& id = d_net_status["NodeID"];
 
     if (text == "11")
+    {
+        isNodeIdCorrect = true;
         id.SetString("SensDug11");
-
-    if (text == "12")
-        id.SetString("SensDug12");
-
-    if (text == "13")
-        id.SetString("SensDug13");
-
-    if (text == "15")
-        id.SetString("SensDug15");
-
-    if (text == "16")
-        id.SetString("SensDug16");
-
-    if (text == "25")
-        id.SetString("SensDug25");
-
-    if (text == "26")
-        id.SetString("SensDug26");
-
-    Writer<StringBuffer> writer_net_status(buf_net_status);
-    d_net_status.Accept(writer_net_status);
-
-    cout << buf_net_status.GetString() << endl;
-
-    connector = new TCPConnector();
-
-    //char** av = get_main_argv_temp();
-    QStringList arguments = qApp->arguments();
-
-    stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
-
-    if (stream) {
-        message = buf_net_status.GetString();
-        stream->send(message.c_str(), message.size());
-        printf("sent - %s\n", message.c_str());
-        len = stream->receive(line, sizeof(line));
-        QMessageBox::information(this, " Response Message from the Node", line);
-        line[len] = 0;
-        printf("received - %s\n", line);
-        delete stream;
-        buf_net_status.Clear();
-        delay(100);	// 100ms
     }
-    delete connector;
+    else if (text == "12")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug12");
+    }
+    else if (text == "13")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug13");
+    }
+    else if (text == "15")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug15");
+    }
+    else if (text == "16")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug16");
+    }
+    else if (text == "25")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug25");
+    }
+    else if (text == "26")
+    {
+        isNodeIdCorrect = true;
+        id.SetString("SensDug26");
+    }
+    else
+    {
+        isNodeIdCorrect = false;
+        QMessageBox::warning(this,"Input Error", "Invalid NodeID!");
+    }
+
+    if (isNodeIdCorrect)
+    {
+
+        Writer<StringBuffer> writer_net_status(buf_net_status);
+        d_net_status.Accept(writer_net_status);
+
+        cout << buf_net_status.GetString() << endl;
+
+        connector = new TCPConnector();
+
+        //char** av = get_main_argv_temp();
+        QStringList arguments = qApp->arguments();
+
+        stream = connector->connect(qPrintable(arguments.at(2)), atoi(qPrintable(arguments.at(1))));
+
+        if (stream) {
+            message = buf_net_status.GetString();
+            stream->send(message.c_str(), message.size());
+            printf("sent - %s\n", message.c_str());
+            len = stream->receive(line, sizeof(line));
+            QMessageBox::information(this, " Response Message from the Node", line);
+            line[len] = 0;
+            printf("received - %s\n", line);
+            delete stream;
+            buf_net_status.Clear();
+            delay(100);	// 100ms
+        }
+        delete connector;
+        isNodeIdCorrect = false;
+    }
 }
