@@ -13,25 +13,8 @@ SOURCES += \
     DDSEntityManagerKonSens.cpp \
     tcpconnector.cpp \
     tcpstream.cpp \
-    ServerRequester.cpp
-
-LIBS +=     -L/opt/HDE/x86_64.linux/lib \
-            -lddsserialization \
-            -lddskernel \
-            -lddsutil \
-            -lddsdatabase \
-            -lddsuser \
-            -lddsconf \
-            -lddsconfparser \
-            -ldcpsgapi \
-            -ldcpssacpp \
-            -lddsos \
-
-
-
-INCLUDEPATH +=  /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ /opt/HDE/x86_64.linux/examples/include \
-
-DEPENDPATH += /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ /opt/HDE/x86_64.linux/examples/include \
+    ServerRequester.cpp \
+    Timeout.cpp
 
 DISTFILES += \
     Server_Requester.pro.user \
@@ -47,4 +30,31 @@ HEADERS += \
     tcpacceptor.h \
     DDSEntityManagerKonSens.h \
     tcpconnector.h \
-    tcpstream.h
+    tcpstream.h \
+    Timeout.h
+
+LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \
+            -lddsserialization \
+            -lddskernel \
+            -lddsutil \
+            -lddsdatabase \
+            -lddsuser \
+            -lddsconf \
+            -lddsconfparser \
+            -ldcpsgapi \
+            -ldcpssacpp \
+            -lddsos \
+            -L/usr/lib \
+            -lboost_filesystem \
+            -lboost_system \
+            -lboost_regex \
+
+
+
+INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+
+DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \

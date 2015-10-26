@@ -13,7 +13,21 @@ SOURCES += \
     DDSEntityManagerKonSens.cpp \
     Timeout.cpp
 
-LIBS +=     -L/opt/HDE/x86_64.linux/lib \
+DISTFILES += \
+    Node_Wifi_Publisher.pro.user \
+    KonSensData.idl
+
+HEADERS += \
+    ccpp_KonSensData.h \
+    CheckStatus.h \
+    KonSensData.h \
+    KonSensDataDcps.h \
+    KonSensDataDcps_impl.h \
+    KonSensDataSplDcps.h \
+    DDSEntityManagerKonSens.h \
+    Timeout.h
+
+LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \
             -lddsserialization \
             -lddskernel \
             -lddsutil \
@@ -31,21 +45,12 @@ LIBS +=     -L/opt/HDE/x86_64.linux/lib \
 
 
 
-INCLUDEPATH +=  /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ /opt/HDE/x86_64.linux/examples/include \
-                /usr/include/boost
-DEPENDPATH += /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ /opt/HDE/x86_64.linux/examples/include \
+INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
                 /usr/include/boost
 
-DISTFILES += \
-    Node_Wifi_Publisher.pro.user \
-    KonSensData.idl
-
-HEADERS += \
-    ccpp_KonSensData.h \
-    CheckStatus.h \
-    KonSensData.h \
-    KonSensDataDcps.h \
-    KonSensDataDcps_impl.h \
-    KonSensDataSplDcps.h \
-    DDSEntityManagerKonSens.h \
-    Timeout.h
+DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+                /usr/include/boost

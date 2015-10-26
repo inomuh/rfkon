@@ -25,7 +25,7 @@ HEADERS += \
     KonSensDataSplDcps.h \
     DDSEntityManagerKonSens.h
 
-LIBS +=     -L/opt/HDE/x86_64.linux/lib \
+LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \
             -lddsserialization \
             -lddskernel \
             -lddsutil \
@@ -36,17 +36,20 @@ LIBS +=     -L/opt/HDE/x86_64.linux/lib \
             -ldcpsgapi \
             -ldcpssacpp \
             -lddsos \
-            -L/usr/local/mongodb/lib \
+            -L/home/bolatu/opt/mongo-cxx-driver/lib \
             -lmongoclient \
             -lboost_thread \
             -lboost_system \
             -lboost_regex\
 
 
-INCLUDEPATH +=  /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
-            /opt/HDE/x86_64.linux/examples/include \
-            /usr/local/mongodb/include
+INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+                /home/bolatu/opt/mongo-cxx-driver/include
 
-DEPENDPATH += /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
-            /opt/HDE/x86_64.linux/examples/include \
-            /usr/local/mongodb/include
+DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+                /home/bolatu/opt/mongo-cxx-driver/include
+

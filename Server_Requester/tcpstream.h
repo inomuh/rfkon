@@ -1,9 +1,41 @@
 /*
-   TCPStream.h
-
-   TCPStream class interface. TCPStream provides methods to trasnfer
-   data between peers over a TCP/IP connection.
-*/
+ * tcpstream.h
+ *
+ * GLOBAL DEĞİŞKENLER:
+ *  Yok
+ *
+ * ENUM KULLANIMI:
+ *      enum {
+ *       connectionClosed = 0,
+ *       connectionReset = -1,
+ *       connectionTimedOut = -2
+ *      };
+ *
+ * FONKSİYON PROTOTİPLERİ:
+ *  public:
+ *   ssize_t send(const char* buffer, size_t len);
+ *   ssize_t receive(char* buffer, size_t len, int timeout=0);
+ *   string getPeerIP();
+ *   int    getPeerPort();
+ *
+ *  private:
+ *   bool waitForReadEvent(int timeout);
+ *   TcpStream(int sd, struct sockaddr_in* address);
+ *   TcpStream();
+ *   TcpStream(const TcpStream& stream);
+ *
+ * AMAÇ:
+ *  TcpStream sınıfı, ağ I/O mekanizmasının yaratılmasını sağlar. Ayrıca
+ *  IP addresslerini ve TCP Port bilgisini döndürür.
+ *
+ * NOTLAR:
+ *  Yazar: Uğur Bolat
+ *  Tarih: 15.10.2015
+ *
+ *   Versiyon: v_1.0
+ *    Güncelleme Tarihi: 15.10.2015
+ *
+ */
 
 #ifndef __tcpstream_h__
 #define __tcpstream_h__
@@ -15,36 +47,36 @@
 
 using namespace std;
 
-class TCPStream
+class TcpStream
 {
-    int     m_sd;
-    string  m_peerIP;
-    int     m_peerPort;
+  int     sd_;
+  string  peerIp;
+  int     peerPort_;
 
-  public:
-    friend class TCPAcceptor;
-    friend class TCPConnector;
+public:
+  friend class TcpAcceptor;
+  friend class TcpConnector;
 
-    ~TCPStream();
+  ~TcpStream();
 
-    ssize_t send(const char* buffer, size_t len);
-    ssize_t receive(char* buffer, size_t len, int timeout=0);
+  ssize_t send(const char* buffer, size_t len);
+  ssize_t receive(char* buffer, size_t len, int timeout=0);
 
-    string getPeerIP();
-    int    getPeerPort();
+  string getPeerIP();
+  int    getPeerPort();
 
-    enum {
-        connectionClosed = 0,
-        connectionReset = -1,
-        connectionTimedOut = -2
-    };
+  enum {
+    connectionClosed = 0,
+    connectionReset = -1,
+    connectionTimedOut = -2
+  };
 
-  private:
-    bool waitForReadEvent(int timeout);
-    
-    TCPStream(int sd, struct sockaddr_in* address);
-    TCPStream();
-    TCPStream(const TCPStream& stream);
+private:
+  bool waitForReadEvent(int timeout);
+
+  TcpStream(int sd, struct sockaddr_in* address);
+  TcpStream();
+  TcpStream(const TcpStream& stream);
 };
 
 #endif

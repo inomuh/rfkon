@@ -26,9 +26,10 @@ HEADERS += \
     KonSensDataSplDcps.h \
     DDSEntityManagerKonSens.h \
     NodeBtHandler.cpp.autosave \
-    Timeout.h
+    Timeout.h \
+    DDSEntityManagerKonSens.h.autosave
 
-LIBS +=     -L/opt/HDE/x86_64.linux/lib \
+LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \
             -lddsserialization \
             -lddskernel \
             -lddsutil \
@@ -46,6 +47,12 @@ LIBS +=     -L/opt/HDE/x86_64.linux/lib \
 
 
 
-INCLUDEPATH +=  /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ /opt/HDE/x86_64.linux/examples/include \
+INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
                 /usr/include/boost
-DEPENDPATH += /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ /opt/HDE/x86_64.linux/examples/include \
+
+DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+                /usr/include/boost

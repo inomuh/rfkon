@@ -1,3 +1,73 @@
+/*
+ * DDSEntityManagerKonSens.cpp
+ *
+ * GLOBAL DEĞİŞKENLER:
+ *  Yok
+ *
+ * ENUM KULLANIMI:
+ *  Yok
+ *
+ * FONKSİYON PROTOTİPLERİ:
+ *  void createParticipant(const char *partitiontName);
+ *  void deleteParticipant();
+ *  void registerType(TypeSupport *ts);
+ *  void createTopic(char *topicName);
+ *  void createTopic(char *topicName,
+ *                  DDS::ReliabilityQosPolicyKind reliability_kind,
+ *                  DDS::DurabilityQosPolicyKind durability_kind);
+ *  void deleteTopic();
+ *  void createPublisher();
+ *  void deletePublisher();
+ *  void createWriter();
+ *  void createWriter(bool autodispose_unregistered_instances);
+ *  void createWriter(bool autodispose_unregistered_instances,
+ *                   DDS::HistoryQosPolicyKind history_kind);
+ *  void createWriter(bool autodispose_unregistered_instances,
+ *                   DDS::HistoryQosPolicyKind history_kind,
+ *                   int history_depth);
+ *  void createWriter(bool autodispose_unregistered_instances,
+ *                   DDS::HistoryQosPolicyKind history_kind,
+ *                   DDS::DestinationOrderQosPolicyKind destination_order);
+ *  void createWriter(bool autodispose_unregistered_instances,
+ *                   DDS::HistoryQosPolicyKind history_kind,
+ *                   int history_depth,
+ *                   DDS::DestinationOrderQosPolicyKind destination_order);
+ *  void deleteWriter();
+ *  void createSubscriber();
+ *  void deleteSubscriber();
+ *  void createReader();
+ *  void createReader(DDS::HistoryQosPolicyKind history_kind,
+ *                   DDS::DestinationOrderQosPolicyKind destination_order);
+ *  void createReader(DDS::HistoryQosPolicyKind history_kind);
+ *  void createReader(DDS::HistoryQosPolicyKind history_kind,
+ *                   int history_depth,
+ *                   DDS::DestinationOrderQosPolicyKind destination_order);
+ *  void createReader(DDS::HistoryQosPolicyKind history_kind,
+ *                   int history_depth);
+ *  void deleteReader();
+ *  DataReader_ptr getReader();
+ *  DataWriter_ptr getWriter();
+ *  Publisher_ptr getPublisher();
+ *  Subscriber_ptr getSubscriber();
+ *  Topic_ptr getTopic();
+ *  DomainParticipant_ptr getParticipant();
+ *  ~DDSEntityManager();
+ *
+ * AMAÇ:
+ *  DDSEntityManagerKonSens, DDS'e ait Entity'leri (Domain, Topic, Publisher,
+ *  Writer etc.) yaratmada bize kolaylık sağlaması için oluşturulmuş bir
+ *  nesnedir. Bu kapsülleme sayesinde oluşturalacak olan DDS değişkenleri
+ *  kolayca konfigüre edilebilir.
+ *
+ * NOTLAR:
+ *  Yazar: Uğur Bolat
+ *  Tarih: 15.10.2015
+ *
+ *   Versiyon: v_1.0
+ *    Güncelleme Tarihi: 15.10.2015
+ *
+ */
+
 #include "DDSEntityManagerKonSens.h"
 
 void DDSEntityManager::createParticipant(const char *partitiontName)
@@ -34,6 +104,26 @@ void DDSEntityManager::createTopic(char *topicName)
   //status = participant->get_default_topic_qos(reliable_topic_qos);
   //checkStatus(status, "DDS::DomainParticipant::get_default_topic_qos");
   reliable_topic_qos.durability.kind = TRANSIENT_LOCAL_DURABILITY_QOS;
+
+  /* Make the tailored QoS the new default. */
+  status = participant->set_default_topic_qos(reliable_topic_qos);
+  checkStatus(status, "DDS::DomainParticipant::set_default_topic_qos");
+
+  /* Use the changed policy when defining the HelloWorld topic */
+  topic = participant->create_topic(topicName, typeName, reliable_topic_qos,
+    NULL, STATUS_MASK_NONE);
+  checkHandle(topic.in(), "DDS::DomainParticipant::create_topic ()");
+}
+
+void DDSEntityManager::createTopic(char *topicName, DDS::ReliabilityQosPolicyKind reliability_kind, DDS::DurabilityQosPolicyKind durability_kind)
+{
+  status = participant->get_default_topic_qos(reliable_topic_qos);
+  checkStatus(status, "DDS::DomainParticipant::get_default_topic_qos");
+  reliable_topic_qos.reliability.kind = reliability_kind;
+
+  //status = participant->get_default_topic_qos(reliable_topic_qos);
+  //checkStatus(status, "DDS::DomainParticipant::get_default_topic_qos");
+  reliable_topic_qos.durability.kind = durability_kind;
 
   /* Make the tailored QoS the new default. */
   status = participant->set_default_topic_qos(reliable_topic_qos);
@@ -95,6 +185,42 @@ void DDSEntityManager::createWriter(bool autodispose_unregistered_instances)
   checkHandle(writer, "DDS::Publisher::create_datawriter");
 }
 
+void DDSEntityManager::createWriter(bool autodispose_unregistered_instances, DDS::HistoryQosPolicyKind history_kind, int history_depth)
+{
+    status = publisher->get_default_datawriter_qos(dw_qos);
+    checkStatus(status, "DDS::DomainParticipant::get_default_publisher_qos");
+    status = publisher->copy_from_topic_qos(dw_qos, reliable_topic_qos);
+    checkStatus(status, "DDS::Publisher::copy_from_topic_qos");
+    // Set autodispose to false so that you can start
+    // the subscriber after the publisher
+    dw_qos.writer_data_lifecycle.autodispose_unregistered_instances =
+      autodispose_unregistered_instances;
+
+    dw_qos.history.kind = history_kind;
+    dw_qos.history.depth = history_depth;
+
+    writer = publisher->create_datawriter(topic.in(), dw_qos, NULL,
+      STATUS_MASK_NONE);
+    checkHandle(writer, "DDS::Publisher::create_datawriter");
+}
+
+void DDSEntityManager::createWriter(bool autodispose_unregistered_instances, DDS::HistoryQosPolicyKind history_kind)
+{
+    status = publisher->get_default_datawriter_qos(dw_qos);
+    checkStatus(status, "DDS::DomainParticipant::get_default_publisher_qos");
+    status = publisher->copy_from_topic_qos(dw_qos, reliable_topic_qos);
+    checkStatus(status, "DDS::Publisher::copy_from_topic_qos");
+    // Set autodispose to false so that you can start
+    // the subscriber after the publisher
+    dw_qos.writer_data_lifecycle.autodispose_unregistered_instances =
+      autodispose_unregistered_instances;
+
+    dw_qos.history.kind = history_kind;
+
+    writer = publisher->create_datawriter(topic.in(), dw_qos, NULL,
+      STATUS_MASK_NONE);
+    checkHandle(writer, "DDS::Publisher::create_datawriter");
+}
 
 // for KEEP_LAST
 void DDSEntityManager::createWriter(bool autodispose_unregistered_instances, DDS::HistoryQosPolicyKind history_kind, int history_depth, DDS::DestinationOrderQosPolicyKind destination_order)
@@ -172,6 +298,36 @@ void DDSEntityManager::createReader()
           dr_qos, NULL, STATUS_MASK_NONE);
   checkHandle(reader, "DDS::Subscriber::create_datareader ()");
 
+}
+
+
+void DDSEntityManager::createReader(DDS::HistoryQosPolicyKind history_kind)
+{
+    status = subscriber->get_default_datareader_qos(dr_qos);
+    checkStatus(status, "DDS::Subscriber::get_default_datareader_qos");
+    status = subscriber->copy_from_topic_qos(dr_qos, reliable_topic_qos);
+    checkStatus(status, "DDS::Subscriber::copy_from_topic_qos");
+
+    dr_qos.history.kind = history_kind;
+
+    reader = subscriber->create_datareader(topic.in(),
+            dr_qos, NULL, STATUS_MASK_NONE);
+    checkHandle(reader, "DDS::Subscriber::create_datareader ()");
+}
+
+void DDSEntityManager::createReader(DDS::HistoryQosPolicyKind history_kind, int history_depth)
+{
+    status = subscriber->get_default_datareader_qos(dr_qos);
+    checkStatus(status, "DDS::Subscriber::get_default_datareader_qos");
+    status = subscriber->copy_from_topic_qos(dr_qos, reliable_topic_qos);
+    checkStatus(status, "DDS::Subscriber::copy_from_topic_qos");
+
+    dr_qos.history.kind = history_kind;
+    dr_qos.history.depth = history_depth;
+
+    reader = subscriber->create_datareader(topic.in(),
+            dr_qos, NULL, STATUS_MASK_NONE);
+    checkHandle(reader, "DDS::Subscriber::create_datareader ()");
 }
 
 void DDSEntityManager::createReader(DDS::HistoryQosPolicyKind history_kind, DDS::DestinationOrderQosPolicyKind destination_order)

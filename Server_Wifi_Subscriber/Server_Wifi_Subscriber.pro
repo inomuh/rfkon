@@ -12,32 +12,6 @@ SOURCES += \
     DDSEntityManagerKonSens.cpp \
     ServerWifiSubscriber.cpp
 
-LIBS +=     -L/opt/HDE/x86_64.linux/lib \
-            -lddsserialization \
-            -lddskernel \
-            -lddsutil \
-            -lddsdatabase \
-            -lddsuser \
-            -lddsconf \
-            -lddsconfparser \
-            -ldcpsgapi \
-            -ldcpssacpp \
-            -lddsos \
-            -L/usr/local/mongodb/lib \
-            -lmongoclient \
-            -lboost_thread \
-            -lboost_system \
-            -lboost_regex\
-
-
-INCLUDEPATH +=  /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
-            /opt/HDE/x86_64.linux/examples/include \
-            /usr/local/mongodb/include
-
-DEPENDPATH += /opt/HDE/x86_64.linux/include /opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
-            /opt/HDE/x86_64.linux/examples/include \
-            /usr/local/mongodb/include
-
 DISTFILES += \
     Server_Wifi_Subscriber.pro.user \
     KonSensData.idl
@@ -50,3 +24,33 @@ HEADERS += \
     KonSensDataDcps_impl.h \
     KonSensDataSplDcps.h \
     DDSEntityManagerKonSens.h
+
+
+LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \
+            -lddsserialization \
+            -lddskernel \
+            -lddsutil \
+            -lddsdatabase \
+            -lddsuser \
+            -lddsconf \
+            -lddsconfparser \
+            -ldcpsgapi \
+            -ldcpssacpp \
+            -lddsos \
+            -L/home/bolatu/opt/mongo-cxx-driver/lib \
+            -lmongoclient \
+            -lboost_thread \
+            -lboost_system \
+            -lboost_regex\
+
+
+INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+                /home/bolatu/opt/mongo-cxx-driver/include
+
+DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+                /home/bolatu/opt/mongo-cxx-driver/include
+
