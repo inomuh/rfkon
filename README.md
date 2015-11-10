@@ -41,13 +41,13 @@ then
     export SPLICE_JDK
 fi
 BOOST_ROOT="/usr/include/boost"
-**OSPL_HOME="/home/<xxx>/opt/HDE/x86_64.linux"**
+OSPL_HOME="/home/**xxx**/opt/HDE/x86_64.linux"
 PATH=$OSPL_HOME/bin:$PATH
 LD_LIBRARY_PATH=$OSPL_HOME/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
 CPATH=$OSPL_HOME/include:$OSPL_HOME/include/sys:${CPATH:=}
 OSPL_URI=file://$OSPL_HOME/etc/config/ospl_unicast.xml
 OSPL_TMPL_PATH=$OSPL_HOME/etc/idlpp
-. $OSPL_HOME/etc/java/defs.$SPLICE_JDK
+
 export OSPL_HOME PATH LD_LIBRARY_PATH CPATH OSPL_TMPL_PATH OSPL_URI BOOST_ROOT
 
 $ source ~/opt/HDE/x86_64.linux/release.com
@@ -58,15 +58,15 @@ $ sudo gedit /etc/environment
 
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
 
-PATH=/home/<xxx>/opt/HDE/x86_64.linux/etc/idlpp:/home/<xxx>/opt/HDE/x86_64.linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-OSPL_HOME=/home/<xxx>/opt/HDE/x86_64.linux
+PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp:/home/xxx/opt/HDE/x86_64.linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+OSPL_HOME=/home/xxx/opt/HDE/x86_64.linux
 OSPL_TARGET=x86_64.linux
-LD_LIBRARY_PATH=/home/<xxx>/opt/HDE/x86_64.linux/lib
-CPATH=/home/<xxx>/opt/HDE/x86_64.linux/include://home/<xxx>/opt/HDE/x86_64.linux/include/sys:/home/<xxx>/opt/HDE/x86_64.linux/include/dcps/C++/SACPP:/home/<xxx>/opt/HDE/x86_64.linux/include/dcps/C++/CCPP:/home/<xxx>/opt/HDE/x86_64.linux/include/dcps/C++/isocpp
-OSPL_URI=file://home/<xxx>/opt/HDE/x86_64.linux/etc/config/ospl.xml
-OSPL_TMPL_PATH=/home/<xxx>/opt/HDE/x86_64.linux/etc/idlpp
-QTDIR=/home/<xxx>/opt/Qt5.5/5.5/gcc_64/
-CLASSPATH=/home/<xxx>/opt/HDE
+LD_LIBRARY_PATH=/home/xxx/opt/HDE/x86_64.linux/lib
+CPATH=/home/xxx/opt/HDE/x86_64.linux/include://home/xxx/opt/HDE/x86_64.linux/include/sys:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/SACPP:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/CCPP:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/isocpp
+OSPL_URI=file://home/xxx/opt/HDE/x86_64.linux/etc/config/ospl.xml
+OSPL_TMPL_PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp
+QTDIR=/home/xxx/opt/Qt5.5/5.5/gcc_64/
+CLASSPATH=/home/xxx/opt/HDE
 
 Reboot your system!
 $ sudo reboot
