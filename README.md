@@ -49,7 +49,7 @@ OSPL_URI=file://$OSPL_HOME/etc/config/ospl_unicast.xml <br />
 OSPL_TMPL_PATH=$OSPL_HOME/etc/idlpp <br />
 <br />
 export OSPL_HOME PATH LD_LIBRARY_PATH CPATH OSPL_TMPL_PATH OSPL_URI BOOST_ROOT <br />
-<br />
+
 $ source ~/opt/HDE/x86_64.linux/release.com <br />
 
 ### Editing 'environment' file for Qt Creator
@@ -58,7 +58,7 @@ $ sudo gedit /etc/environment <br />
 
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
 
-PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp:/home/xxx/opt/HDE/x86_64.linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games <br />
+> PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp:/home/xxx/opt/HDE/x86_64.linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games <br />
 OSPL_HOME=/home/xxx/opt/HDE/x86_64.linux <br />
 OSPL_TARGET=x86_64.linux <br />
 LD_LIBRARY_PATH=/home/xxx/opt/HDE/x86_64.linux/lib <br />

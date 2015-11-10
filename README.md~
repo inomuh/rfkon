@@ -30,8 +30,8 @@ $ gedit release.com <br />
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
 
 > echo "<<< OpenSplice HDE Release V6.4.140407OSS For x86_64.linux, Date 2014-04-15 >>>" <br />
-> if [ "${SPLICE_ORB:=}" = "" ] <br />
-> then <br />
+ if [ "${SPLICE_ORB:=}" = "" ] <br />
+ then <br />
     SPLICE_ORB=DDS_OpenFusion_2 <br />
     export SPLICE_ORB <br />
 fi <br />
