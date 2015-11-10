@@ -82,7 +82,7 @@ And you can open any Qt projects
 
 For ex: Server_Requester.pro file content has this part which has to be changed:
 
-LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \ <br />
+> LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \ <br />
             -lddsserialization \ <br />
             -lddskernel \ <br />
             -lddsutil \ <br />
@@ -97,13 +97,11 @@ LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \ <br />
             -lboost_filesystem \ <br />
             -lboost_system \ <br />
             -lboost_regex \ <br />
-
-
-
+<br />
 INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \ <br />
                 /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \ <br />
                 /home/bolatu/opt/HDE/x86_64.linux/examples/include \ <br />
-
+<br />
 DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \ <br />
                 /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \ <br />
                 /home/bolatu/opt/HDE/x86_64.linux/examples/include \ <br />
