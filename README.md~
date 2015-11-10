@@ -12,76 +12,69 @@
 
 ### Packages to install before installing on your Linux machine
 
-$ sudo apt-get install gcc g++
-$ sudo apt-get install autoconf
-$ sudo apt-get install automake
-
-$ sudo apt-get install build-essential
-
-$ sudo apt-get install libboost-all-dev
+$ sudo apt-get install gcc g++ <br />
+$ sudo apt-get install autoconf <br />
+$ sudo apt-get install automake <br />
+$ sudo apt-get install build-essential <br />
+$ sudo apt-get install libboost-all-dev <br />
 
 ### Editing 'release.com' file to source the environmental variable for DDS. 'release.com' file must be in <the path you download the DDS source files>/HDE/x86_64.linux
 
-$ cd ~/
-
-$ mkdir opt
-
-$ mv ~/Downloads/HDE ~/opt
- 
-$ cd ~/opt/HDE/x86_64.linux
-
-$ sudo chmod +x release.com
-
-$ gedit release.com
+$ cd ~/ <br />
+$ mkdir opt <br />
+$ mv ~/Downloads/HDE ~/opt <br />
+$ cd ~/opt/HDE/x86_64.linux <br />
+$ sudo chmod +x release.com <br />
+$ gedit release.com <br />
 
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
 
-echo "<<< OpenSplice HDE Release V6.4.140407OSS For x86_64.linux, Date 2014-04-15 >>>"
-if [ "${SPLICE_ORB:=}" = "" ]
-then
-    SPLICE_ORB=DDS_OpenFusion_2
-    export SPLICE_ORB
-fi
-if [ "${SPLICE_JDK:=}" = "" ]
-then
-    SPLICE_JDK=jdk
-    export SPLICE_JDK
-fi
-BOOST_ROOT="/usr/include/boost"
-OSPL_HOME="/home/**xxx**/opt/HDE/x86_64.linux"
-PATH=$OSPL_HOME/bin:$PATH
-LD_LIBRARY_PATH=$OSPL_HOME/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
-CPATH=$OSPL_HOME/include:$OSPL_HOME/include/sys:${CPATH:=}
-OSPL_URI=file://$OSPL_HOME/etc/config/ospl_unicast.xml
-OSPL_TMPL_PATH=$OSPL_HOME/etc/idlpp
+echo "<<< OpenSplice HDE Release V6.4.140407OSS For x86_64.linux, Date 2014-04-15 >>>" <br />
+if [ "${SPLICE_ORB:=}" = "" ] <br />
+then <br />
+    SPLICE_ORB=DDS_OpenFusion_2 <br />
+    export SPLICE_ORB <br />
+fi <br />
+if [ "${SPLICE_JDK:=}" = "" ] <br />
+then <br />
+    SPLICE_JDK=jdk <br />
+    export SPLICE_JDK <br />
+fi <br />
+BOOST_ROOT="/usr/include/boost" <br />
+OSPL_HOME="/home/**xxx**/opt/HDE/x86_64.linux" <br />
+PATH=$OSPL_HOME/bin:$PATH <br />
+LD_LIBRARY_PATH=$OSPL_HOME/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH <br />
+CPATH=$OSPL_HOME/include:$OSPL_HOME/include/sys:${CPATH:=} <br />
+OSPL_URI=file://$OSPL_HOME/etc/config/ospl_unicast.xml <br />
+OSPL_TMPL_PATH=$OSPL_HOME/etc/idlpp <br />
 
-export OSPL_HOME PATH LD_LIBRARY_PATH CPATH OSPL_TMPL_PATH OSPL_URI BOOST_ROOT
+export OSPL_HOME PATH LD_LIBRARY_PATH CPATH OSPL_TMPL_PATH OSPL_URI BOOST_ROOT <br />
 
-$ source ~/opt/HDE/x86_64.linux/release.com
+$ source ~/opt/HDE/x86_64.linux/release.com <br />
 
 ### Editing 'environment' file for Qt Creator
 
-$ sudo gedit /etc/environment
+$ sudo gedit /etc/environment <br />
 
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
 
-PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp:/home/xxx/opt/HDE/x86_64.linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-OSPL_HOME=/home/xxx/opt/HDE/x86_64.linux
-OSPL_TARGET=x86_64.linux
-LD_LIBRARY_PATH=/home/xxx/opt/HDE/x86_64.linux/lib
-CPATH=/home/xxx/opt/HDE/x86_64.linux/include://home/xxx/opt/HDE/x86_64.linux/include/sys:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/SACPP:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/CCPP:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/isocpp
-OSPL_URI=file://home/xxx/opt/HDE/x86_64.linux/etc/config/ospl.xml
-OSPL_TMPL_PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp
-QTDIR=/home/xxx/opt/Qt5.5/5.5/gcc_64/
-CLASSPATH=/home/xxx/opt/HDE
+PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp:/home/xxx/opt/HDE/x86_64.linux/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games <br />
+OSPL_HOME=/home/xxx/opt/HDE/x86_64.linux <br />
+OSPL_TARGET=x86_64.linux <br />
+LD_LIBRARY_PATH=/home/xxx/opt/HDE/x86_64.linux/lib <br />
+CPATH=/home/xxx/opt/HDE/x86_64.linux/include://home/xxx/opt/HDE/x86_64.linux/include/sys:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/SACPP:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/CCPP:/home/xxx/opt/HDE/x86_64.linux/include/dcps/C++/isocpp <br />
+OSPL_URI=file://home/xxx/opt/HDE/x86_64.linux/etc/config/ospl.xml <br />
+OSPL_TMPL_PATH=/home/xxx/opt/HDE/x86_64.linux/etc/idlpp <br />
+QTDIR=/home/xxx/opt/Qt5.5/5.5/gcc_64/ <br />
+CLASSPATH=/home/xxx/opt/HDE <br />
 
-Reboot your system!
-$ sudo reboot
+Reboot your system! <br />
+$ sudo reboot <br />
 
 ### Cloning the RFKON source codes and producing necessary DDS source codes using 'idlpp' command
 
-$ cd Downloads
-$ git clone https://github.com/inomuh/rfkon
+$ cd Downloads <br />
+$ git clone https://github.com/inomuh/rfkon <br />
 
 And you can open any Qt projects 
 
@@ -89,31 +82,31 @@ And you can open any Qt projects
 
 For ex: Server_Requester.pro file content has this part which has to be changed:
 
-LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \
-            -lddsserialization \
-            -lddskernel \
-            -lddsutil \
-            -lddsdatabase \
-            -lddsuser \
-            -lddsconf \
-            -lddsconfparser \
-            -ldcpsgapi \
-            -ldcpssacpp \
-            -lddsos \
-            -L/usr/lib \
-            -lboost_filesystem \
-            -lboost_system \
-            -lboost_regex \
+LIBS +=     -L/home/bolatu/opt/HDE/x86_64.linux/lib \ <br />
+            -lddsserialization \ <br />
+            -lddskernel \ <br />
+            -lddsutil \ <br />
+            -lddsdatabase \ <br />
+            -lddsuser \ <br />
+            -lddsconf \ <br />
+            -lddsconfparser \ <br />
+            -ldcpsgapi \ <br />
+            -ldcpssacpp \ <br />
+            -lddsos \ <br />
+            -L/usr/lib \ <br />
+            -lboost_filesystem \ <br />
+            -lboost_system \ <br />
+            -lboost_regex \ <br />
 
 
 
-INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \
-                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
-                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+INCLUDEPATH +=  /home/bolatu/opt/HDE/x86_64.linux/include \ <br />
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \ <br />
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \ <br />
 
-DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \
-                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \
-                /home/bolatu/opt/HDE/x86_64.linux/examples/include \
+DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \ <br />
+                /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \ <br />
+                /home/bolatu/opt/HDE/x86_64.linux/examples/include \ <br />
 
 **Replace <bolatu> part with your hostname (if you move your DDS library into other path, you have to declare that path instead of /home/<xxx>/opt/HDE/x86_64.linux/)**
 
