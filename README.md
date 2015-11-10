@@ -12,18 +12,15 @@
 
 ### Packages to install before installing on your Linux machine
 
-$ sudo apt-get install gcc g++
-$ sudo apt-get install autoconf
-$ sudo apt-get install automake
-
-$ sudo apt-get install build-essential
-
-$ sudo apt-get install libboost-all-dev
+$ sudo apt-get install gcc g++ <br />
+$ sudo apt-get install autoconf <br />
+$ sudo apt-get install automake <br />
+$ sudo apt-get install build-essential <br />
+$ sudo apt-get install libboost-all-dev <br />
 
 ### Editing 'release.com' file to source the environmental variable for DDS. 'release.com' file must be in <the path you download the DDS source files>/HDE/x86_64.linux
 
-$ cd ~/
-
+$ cd ~/ <br />
 $ mkdir opt
 
 $ mv ~/Downloads/HDE ~/opt
