@@ -29,6 +29,7 @@ $ gedit release.com <br />
 
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
 
+----------------
 echo "<<< OpenSplice HDE Release V6.4.140407OSS For x86_64.linux, Date 2014-04-15 >>>" <br />
 if [ "${SPLICE_ORB:=}" = "" ] <br />
 then <br />
@@ -49,6 +50,7 @@ OSPL_URI=file://$OSPL_HOME/etc/config/ospl_unicast.xml <br />
 OSPL_TMPL_PATH=$OSPL_HOME/etc/idlpp <br />
 
 export OSPL_HOME PATH LD_LIBRARY_PATH CPATH OSPL_TMPL_PATH OSPL_URI BOOST_ROOT <br />
+--------------------
 
 $ source ~/opt/HDE/x86_64.linux/release.com <br />
 
