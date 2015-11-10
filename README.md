@@ -108,7 +108,7 @@ DEPENDPATH +=   /home/bolatu/opt/HDE/x86_64.linux/include \ <br />
                 /home/bolatu/opt/HDE/x86_64.linux/include/dcps/C++/SACPP/ \ <br />
                 /home/bolatu/opt/HDE/x86_64.linux/examples/include \ <br />
 
-**Replace <bolatu> part with your hostname (if you move your DDS library into other path, you have to declare that path instead of /home/<xxx>/opt/HDE/x86_64.linux/)**
+**Replace <bolatu> part with your hostname instead of 'bolatu'(if you move your DDS library into other path, you have to declare that path instead of /home/xxx/opt/HDE/x86_64.linux/)**
 
 
 ## Tutorial Video
