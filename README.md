@@ -1,6 +1,6 @@
 # RFKON
 
-**Türkçe doküman için 'Qt-DDS Tutorial.pdf' dosyasına bakınız.
+**Türkçe doküman için 'Qt-DDS Tutorial.pdf' dosyasına bakınız.**
 
 ## Installation and Compiling
 
@@ -13,9 +13,7 @@
 ### Packages to install before installing on your Linux machine
 
 $ sudo apt-get install gcc g++
-
 $ sudo apt-get install autoconf
-
 $ sudo apt-get install automake
 
 $ sudo apt-get install build-essential
@@ -28,9 +26,12 @@ $ cd ~/
 
 $ mkdir opt
 
-$ mv ~/Downloads/HDE ~/opt 
+$ mv ~/Downloads/HDE ~/opt
+ 
 $ cd ~/opt/HDE/x86_64.linux
+
 $ sudo chmod +x release.com
+
 $ gedit release.com
 
 **Replace your content with this one (Just remember to fill <xxx> with your hostname):**
