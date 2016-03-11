@@ -1,0 +1,177 @@
+%% Clear everything
+clc;clear all;close all;
+
+%% Load Train Database
+%% Load ref. point coordinates
+% filenameRefPointCoordinates: Ref. Point Coordinates data file name
+% pathnameRefPointCoordinates: Ref. Point Coordinates data path name
+[filenameRefPointCoordinates,pathnameRefPointCoordinates]=uigetfile({'*.xls;*.xlsx'},'Ref. Point Coordinates File Selector');
+% testTmp_wifi_path: a file path name of Ref. Point Coordinates data for xlsread function
+refPointCoordinates_path=strcat(pathnameRefPointCoordinates,filenameRefPointCoordinates);
+refPointCoordinates=xlsread(refPointCoordinates_path);
+
+% noRefPoints: number of Ref. Points
+noRefPoints=size(refPointCoordinates,1);
+
+%% Load train wifi data 
+% filenameTrainWiFi: train wifi data file name
+% pathnameTrainWiFi: train wifi data path name
+[filenameTrainWiFi,pathnameTrainWiFi]=uigetfile({'*.xls;*.xlsx'},'WiFi Train File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_v1.0\datasets\WiFi');
+% trainTmp_wifi_path: a file path name of wifi train data for xlsread function
+trainTmp_wifi_path=strcat(pathnameTrainWiFi,filenameTrainWiFi);
+trainTmp_wifi=xlsread(trainTmp_wifi_path,'WiFi');
+
+%% Load train mf data
+% filenameTrainMF: train mf data file name
+% pathnameTrainMF: train mf data path name
+[filenameTrainMF,pathnameTrainMF]=uigetfile({'*.xls;*.xlsx'},'MF Train File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_v1.0\datasets\MF');
+% trainTmp_mf_path: a file path name of mf train data for xlsread function
+trainTmp_mf_path=strcat(pathnameTrainMF,filenameTrainMF);
+temp_train_mf=xlsread(trainTmp_mf_path,'MF');
+
+%% Construct train database that contain ref. point x, y coordinates, train WiFi mean values, 
+% train WiFi st. dev. values, train MF mean values, and train MF st. dev.
+% values
+DatabaseConstruction(refPointCoordinates,noRefPoints,trainTmp_wifi,temp_train_mf)
+%% Load constructed database for train data that contains ref. points coordinates,
+% mean and st. dev. of train WiFi RSS data, and mean and st. dev. of train MF data
+% filenameTrainDatabase: constructed train database file name
+% pathnameTrainDatabase: constructed train database path name
+[filenameTrainDatabase,pathnameTrainDatabase]=uigetfile({'*.xls;*.xlsx'},'Database File Selector');
+% trainDatabase_path: a file path name of constructed train database for xlsread function
+trainDatabase_path=strcat(pathnameTrainDatabase,filenameTrainDatabase);
+database=xlsread(trainDatabase_path);
+
+ %% Load test wifi data
+% filenameTest: test wifi data file name
+% pathnameTest: test wifi data path name
+[filenameTest,pathnameTest]=uigetfile({'*.csv'},'WiFi Test File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_v1.0\datasets\WiFi');
+% testTmp_wifi_path: a file path name of wifi test data for xlsread function
+testTmp_wifi_path=strcat(pathnameTest,filenameTest);
+testTmp_wifi=csvread(testTmp_wifi_path,1,0);
+
+%% Load test mf data
+% filenameTestMF: test mf data file name
+% pathnameTestMF: test mf data path name
+[filenameTestMF,pathnameTestMF]=uigetfile({'*.csv'},'MF Test File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_v1.0\datasets\MF');
+% testTmp_mf_path: a file path name of mf train data for xlsread function
+testTmp_mf_path=strcat(pathnameTestMF,filenameTestMF);
+testTmp_mf=csvread(testTmp_mf_path,1,0);
+test_mf=testTmp_mf(:,1:3);
+actual=testTmp_wifi(:,size(testTmp_wifi,2));
+predicted=CalculateAccuracy_Plot(testTmp_wifi,test_mf,database);
+plotRefPoints(actual,predicted);
+
+
+ refPointNumber=size(unique(testTmp_wifi(:,size(testTmp_wifi,2))),1);
+
+    test_wifi=testTmp_wifi;
+    
+    % mf data is calibrated according to orientation of the mobile device
+    test_mf = [];
+%     for i = 1:length(testTmp_mf)
+%         C = calibrated_mf([0; 0; 85.27], testTmp_mf(i,:)');
+%         test_mf = [test_mf; C'];
+%     end
+    C = calibrated_mf([0; 0; 85.27], testTmp_mf(1,:)');
+    test_mf = [test_mf; C'];
+    
+    %%
+    [rowTestWiFiData columnTestWiFiData]=size(test_wifi);
+    predictedArray=zeros(rowTestWiFiData,2);
+    %nm: likelihood fonksiyonunu kullanarak her bir test datanýn tüm mean'i
+    %hesaplanmýþ train datalarýn birbirleriyle olan olasýlýklarýný hesaplýyor
+    nm_wifi=zeros(size(test_wifi,1),refPointNumber);
+    nm_mf=zeros(size(test_wifi,1),refPointNumber);
+    %confusion_matrix: weka'daki confusion matrix
+    confusion_matrix=zeros(refPointNumber,refPointNumber);
+
+%     for index=1:length(test_wifi)
+        %BB: her bir test datanýn büyükten küçüðe sýralanmýþ halini tutar
+        %II: sýralý indeksleri tutar
+        index=1;
+        [BB,II] = sort(test_wifi(index,1:columnTestWiFiData-1)','ascend');
+        B=BB';
+        I=II';
+        tmp=B;
+        %testmean_sorted: sýralanmýþ elemanlardan nan olmayanlarý alýr
+        %testmean_sorted_index: testmean_sorted indexlerini tutuyor
+        test_sorted_wifi=B(~isnan(B));
+        test_sorted_index_wifi=I(:,1:length(test_sorted_wifi));
+
+        trainmean_wifi=[];
+        trainstd_wifi=[];
+        for i=1:length(test_sorted_wifi)
+            trainmean_wifi=[trainmean_wifi,database(:,test_sorted_index_wifi(i)+2)];
+            trainstd_wifi=[trainstd_wifi,database(:,test_sorted_index_wifi(i)+20)];
+        end
+
+
+        for cn2=1:20
+            k1=1./(trainstd_wifi(cn2,:)*((2*pi)^0.5));
+            k2=(test_sorted_wifi-trainmean_wifi(cn2,:)).^2;
+            k3=2*(trainstd_wifi(cn2,:).^2);
+            k4=k1.*exp(-1*(k2./k3));
+            nm_wifi(index,cn2)=prod(k4);
+    %         nm(cnx,cn2)=prod(log10(1./(trainstd_sorted(cn2,:).*sqrt(2*pi))).*exp((-(testmean_sorted(cnx,:)-trainmean_sorted(cn2,:)).^2)./));
+        end
+
+        class_wifi=test_wifi(index,columnTestWiFiData);
+        maxIndex_wifi=find(nm_wifi(index,:)==max(nm_wifi(index,:)));
+
+        %%%%%%%% Manyetik Alan ile konumlandýrma doðruluðunu iyileþtirme  %%%%%%%%
+
+        predicted_refpoint_using_wifi=maxIndex_wifi
+
+        trainmean_mf=[];
+        trainstd_mf=[];
+        from=size(database,2)-(2*size(testTmp_mf,2)-1);
+        to=size(database,2)-size(testTmp_mf,2);
+        trainmean_mf=database(:,from:to);
+        trainstd_mf=database(:,(to+1):size(database,2));
+
+        %%%%%%%%%%%%%%%%%%%%%%% PART 1 %%%%%%%%%%%%%%%%%%%%%%%%
+        %% komþuluk hesaplama
+        %%%komþuluklarý database'den uzaklýklarý 6'dan küçük olanlarý alacak
+        %%%þekilde deðiþtir
+        %%%  sqrt((x2-x1)^2+(y2-y1)^2)).
+        predicted_x=database(predicted_refpoint_using_wifi,1);
+        predicted_y=database(predicted_refpoint_using_wifi,2);
+        komsulukArray=find(sqrt((predicted_x-database(:,1)).^2+(predicted_y-database(:,2)).^2)<6);
+        %%%temp_komsuluk_wo_zeros_mf = komsuluk(predicted_refpoint_using_wifi,1:max(find(komsuluk(predicted_refpoint_using_wifi,:) > 0)));
+        temp_komsuluk_wo_zeros_mf=komsulukArray';
+        sub_traindata_mf = [];
+        sub_testdata_mf =  test_mf(index,:);
+        sub_trainmean_mf=[];
+        sub_trainstd_mf=[];
+        for cnj = 1:length(temp_komsuluk_wo_zeros_mf)
+    %         sub_traindata_mf = [sub_traindata_mf; train_mf((temp_komsuluk_wo_zeros_mf(1,cnj)-1)*40+1:temp_komsuluk_wo_zeros_mf(1,cnj)*40,:)];
+    %         temp_sub_testdata_mf = [temp_sub_testdata_mf; testmean_mf(temp_komsuluk_wo_zeros(1,cnj),:)]; 
+            sub_trainmean_mf=[sub_trainmean_mf;trainmean_mf(temp_komsuluk_wo_zeros_mf(1,cnj),:)];
+            sub_trainstd_mf=[sub_trainstd_mf;trainstd_mf(temp_komsuluk_wo_zeros_mf(1,cnj),:)];
+        end
+
+        %%
+
+        for cn1=1:length(temp_komsuluk_wo_zeros_mf)        
+            k1=1./(sub_trainstd_mf(cn1,:)*((2*pi)^0.5));
+            k2=(sub_trainmean_mf(cn1,:)-test_mf(index,:)).^2;
+            k3=2*(sub_trainstd_mf(cn1,:).^2);
+            k4=k1.*exp(-1*(k2./k3));
+            nm_mf(index,temp_komsuluk_wo_zeros_mf(1,cn1))=prod(k4);
+        end
+
+
+        predicted_index_using_mf=find(nm_mf(index,:)== max(nm_mf(index,:)));
+
+%         if class_wifi == predicted_index_using_mf
+%             confusion_matrix(class_wifi,class_wifi)=confusion_matrix(class_wifi,class_wifi)+1;        
+%         else       
+%             confusion_matrix(class_wifi,predicted_index_using_mf)=confusion_matrix(class_wifi,predicted_index_using_mf)+1;
+%         end
+        predictedArray(index,1)=predicted_index_using_mf;
+        predictedArray(index,2)=class_wifi;
+%     end  
+
+    xlswrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_v1.0\predictedArray.xlsx',predictedArray);
+

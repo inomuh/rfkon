@@ -1,0 +1,47 @@
+/**
+ * @addtogroup examplesdcpsHelloWorldisocpp
+ */
+/** @{*/
+/** @file */
+
+module KonSensData
+{
+   struct Msg
+   {
+	string devID;
+	string hostname;
+	long dbm;
+
+   };
+   #pragma keylist Msg devID
+
+   typedef sequence<Msg> MesSeq;
+
+   struct WifiSeq
+   {
+		long timestamp[2][2];
+		long userID;
+		long messageID;
+		MesSeq messages;
+   };
+   #pragma keylist WifiSeq userID
+
+   struct BtSeq
+   {
+                long timestamp[2];
+                long userID;
+		long messageID;
+                MesSeq messages;
+   };
+   #pragma keylist BtSeq userID
+
+   struct ServerReq
+   {
+	string request;
+	long requestID;
+
+   };
+   #pragma keylist ServerReq requestID
+};
+
+/** @}*/
