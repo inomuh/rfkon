@@ -1,5 +1,5 @@
 /**
- * @addtogroup KonSensData
+ * @addtogroup examplesdcpsHelloWorldisocpp
  */
 /** @{*/
 /** @file */
@@ -8,10 +8,9 @@ module KonSensData
 {
    struct Msg
    {
-	string devID;
-        string hostName;
+      	string devID;
+      	string hostName;
 	long dbm;
-
    };
    #pragma keylist Msg devID
 

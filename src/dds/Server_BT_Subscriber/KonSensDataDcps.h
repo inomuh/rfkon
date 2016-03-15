@@ -4,7 +4,7 @@
 //  
 //  File name: KonSensDataDcps.h
 //  Source: KonSensDataDcps.idl
-//  Generated: Thu Sep 17 15:12:46 2015
+//  Generated: Fri Sep 18 11:00:34 2015
 //  OpenSplice V6.4.140407OSS
 //  
 //******************************************************************

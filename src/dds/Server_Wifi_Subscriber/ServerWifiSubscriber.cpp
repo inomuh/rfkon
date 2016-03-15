@@ -35,6 +35,8 @@
 #include <ctime>
 #include <fstream>
 
+#include <map>
+
 #include "ccpp_dds_dcps.h"
 #include "CheckStatus.h"
 #include "ccpp_KonSensData.h"
@@ -68,6 +70,13 @@ int ServerWifiSubscriber(int argc, char *argv[])
   WifiSeqSeq                      msgList;
   ReturnCode_t                    status = -1;
   DDSEntityManager                mgrWifiSub;
+
+  // APs (access point)'lerden elde edilen WiFi RSS değerlerini tek seferde
+  // göndermek için oluşturulan map
+  // MyMap ile herbir sensör düğümden çevredeki APs'lerden edilen veriler
+  // (MacAddress, dbm) değerleri şeklinde tutuluyor
+  std::map< std::string, std::double_t> MyMap;
+  std::map< std::string, std::double_t >::iterator MyIterMap;
 
   // Zaman ile alakalı değişkenler
   os_time                         delay_2ms = { 0, 2000000 };
@@ -241,7 +250,6 @@ int ServerWifiSubscriber(int argc, char *argv[])
     {
       if(infoSeq[j].valid_data)
       {
-        // Gelen mesaj içerikleri terminale yazdırılıyor
         cout << "---------------------------------------------"
              << endl;
 
@@ -314,124 +322,123 @@ int ServerWifiSubscriber(int argc, char *argv[])
         // birlikte Log dosyalarına yazdırılıyor
         switch(msgList[j].userID)
         {
-        case 11:
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile11 << msgList[j].messageID << "	";
-            outFile11 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile11 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile11 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile11 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+          case 11:
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile11 << msgList[j].messageID << "	";
+              outFile11 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile11 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile11 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile11 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
-        case 12:
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile12 << msgList[j].messageID << "	";
-            outFile12 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile12 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile12 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile12 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+          case 12:
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile12 << msgList[j].messageID << "	";
+              outFile12 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile12 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile12 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile12 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
-        case 13:
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile13 << msgList[j].messageID << "	";
-            outFile13 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile13 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile13 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile13 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+          case 13:
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile13 << msgList[j].messageID << "	";
+              outFile13 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile13 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile13 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile13 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
 
-        case 15:
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile15 << msgList[j].messageID << "	";
-            outFile15 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile15 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile15 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile15 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+          case 15:
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile15 << msgList[j].messageID << "	";
+              outFile15 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile15 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile15 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile15 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
-        case 16:
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile16 << msgList[j].messageID << "	";
-            outFile16 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile16 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile16 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile16 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+          case 16:
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile16 << msgList[j].messageID << "	";
+              outFile16 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile16 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile16 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile16 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
-        case 25:
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile25 << msgList[j].messageID << "	";
-            outFile25 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile25 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile25 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile25 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+          case 25:
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile25 << msgList[j].messageID << "	";
+              outFile25 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile25 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile25 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile25 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
-        case 26:
+          case 26:
 
-          if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
-             strTimeOfAfterScan != "1970	01	01	02	00	00")
-          {
-            outFile26 << msgList[j].messageID << "	";
-            outFile26 << strTimeOfBeforeScan << "	"
-                      << msgList[j].timestamp[0][0] << "	";
-            outFile26 << strTimeOfAfterScan << "	"
-                      << msgList[j].timestamp[1][0] << "	";
-            outFile26 << strTimeOfPub << "	"
-                      << info->source_timestamp.nanosec << "	";
-            outFile26 << strTimeOfSub << "	"
-                      << info->reception_timestamp.nanosec << endl;
-          }
-          break;
+            if(strTimeOfBeforeScan != "1970	01	01	02	00	00" ||
+               strTimeOfAfterScan != "1970	01	01	02	00	00")
+            {
+              outFile26 << msgList[j].messageID << "	";
+              outFile26 << strTimeOfBeforeScan << "	"
+                        << msgList[j].timestamp[0][0] << "	";
+              outFile26 << strTimeOfAfterScan << "	"
+                        << msgList[j].timestamp[1][0] << "	";
+              outFile26 << strTimeOfPub << "	"
+                        << info->source_timestamp.nanosec << "	";
+              outFile26 << strTimeOfSub << "	"
+                        << info->reception_timestamp.nanosec << endl;
+            }
+            break;
 
-        default:
-          cout << "	Unidentified User ID...	" << endl;
+          default:
+            cout << "	Unidentified User ID...	" << endl;
         }
-
 
         for(int i=0; i < msgList[j].messages.length(); i++)
         {
@@ -443,22 +450,44 @@ int ServerWifiSubscriber(int argc, char *argv[])
           cout << "    hostname: "
                << msgList[j].messages[i].hostName << endl;
 
-          // Veritabanına kaydetme işlemi gerçekleştiriliyor
-          mongo::BSONObjBuilder b;
-          mongo::StatusWith<mongo::Date_t> now  =
-              mongo::dateFromISOString
-              (mongo::timeToISOString
-               (static_cast<time_t>(info->reception_timestamp.sec)));
-          b.append("timestamp", now.getValue() );
-          b.append("hostname", msgList[j].messages[0].hostName);
-          b.append("devid", msgList[j].messages[i].devID );
-          b.append("dbm", msgList[j].messages[i].dbm );
-          b.append("type","WiFi"); /*EAX: Bluetooth Type, Wifi Type, BLE Type */
-          mongo::BSONObj p = b.obj();
-          c.insert("inovasyon.konsens",p);
+
+          MyMap[(String)msgList[j].messages[i].devID] = double_t(msgList[j].messages[i].dbm);
 
         }
 
+        // Veritabanına kaydetme işlemi gerçekleştiriliyor
+        if(MyMap.size()>0){
+          MyIterMap = MyMap.begin();
+          std::cout << "Map yazdiriliyor "<<std::endl;
+
+             mongo::BSONObjBuilder b;
+             mongo::StatusWith<mongo::Date_t> now  =
+                 mongo::dateFromISOString
+                 (mongo::timeToISOString
+                  (static_cast<time_t>(info->reception_timestamp.sec)));
+             int REF_POINT=-1;
+             double POSITION_X=-1;
+             double POSITION_Y=-1;
+             double POSITION_FLOOR=-1;
+             double BATTERY=-1;
+             b.append("REF_POINT", REF_POINT);
+             b.append("DATE", now.getValue() );
+             b.append("DEVICE_ID",msgList[j].messages[0].hostName);
+             b.append("POSITION_X", POSITION_X);
+             b.append("POSITION_Y", POSITION_Y);
+             b.append("POSITION_FLOOR", POSITION_FLOOR);
+             b.append("BATTERY", BATTERY);
+             while(MyIterMap != MyMap.end() ) {
+                 std::string key = (*MyIterMap).first;
+                 std::cout << "Key: " << key << ", Value: " << MyMap[key] <<std::endl;
+                 b.append(key,MyMap[key]);
+                 MyIterMap++;
+             }
+             MyMap.clear();
+     //        b.append("type","WiFi"); /*EAX: Bluetooth Type, Wifi Type, BLE Type */
+             mongo::BSONObj p = b.obj();
+             c.insert("inovasyon.wifi",p);
+        }
       }
 
       else
@@ -475,6 +504,7 @@ int ServerWifiSubscriber(int argc, char *argv[])
     os_nanoSleep(delay_100ms);
 
   }
+
 
   os_nanoSleep(delay_2ms);
 

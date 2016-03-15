@@ -4,7 +4,7 @@
 //  
 //  File name: KonSensData.cpp
 //  Source: KonSensData.idl
-//  Generated: Thu Sep 17 15:13:05 2015
+//  Generated: Fri Sep 18 11:22:25 2015
 //  OpenSplice V6.4.140407OSS
 //  
 //******************************************************************

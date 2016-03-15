@@ -71,6 +71,13 @@ int ServerBtSubscriber (int argc, char *argv[])
   os_time                         delay_2ms = { 0, 2000000 };
   os_time                         delay_200ms = { 0, 200000000 };
 
+  // APs (access point)'lerden elde edilen BT RSS değerlerini tek seferde
+  // göndermek için oluşturulan map
+  // MyMap ile herbir sensör düğümden çevredeki APs'lerden edilen veriler
+  // (MacAddress, dbm) değerleri şeklinde tutuluyor
+  std::map< std::string, std::double_t> MyMap;
+  std::map< std::string, std::double_t >::iterator MyIterMap;
+
   // !!! Düğüm tarafından Publish edilmiş olan BT mesajına Subscribe olacak
   // Topic yaratılıyor ve o Topic'e ait konfigürasyon ayarları yapılıyor.
 
@@ -238,7 +245,7 @@ int ServerBtSubscriber (int argc, char *argv[])
     {
       if(infoSeq[j].valid_data)
       {
-        // Gelen mesaj içerikleri terminale yazdırılıyor
+        //SampleInfo* info = &(infoSeq[j]);
         cout << "---------------------------------------------"
              << endl;
 
@@ -257,6 +264,10 @@ int ServerBtSubscriber (int argc, char *argv[])
 
         cout << "---------------------------------------------"
              << endl;
+
+
+
+
 
         // Tarama öncesi alınan zaman etiketi (timestamp[0])
         char buffer1[80];
@@ -278,9 +289,7 @@ int ServerBtSubscriber (int argc, char *argv[])
         cout << "    timestamp after pub scans the wifi:  "
              << strTimeOfAfterScan << endl;
 
-        // Subscribe edilen mesajın timestamp bilgileri infoSeq dizisinde
-        // saklanmaktadır. Bu bilgileri erişmek için aşağıdaki atama
-        // yapılıyor
+
         SampleInfo* info = &(infoSeq[j]);
         // Publish edilme zamanı işleniyor
         char buffer3[80];
@@ -432,7 +441,6 @@ int ServerBtSubscriber (int argc, char *argv[])
         }
 
 
-
         for(int i=0; i < msgList[j].messages.length(); i++){
           // Terminalde Subscribe edilen mesajlar yazdırılıyor
           cout << "    devID  : " << msgList[j].messages[i].devID
@@ -442,23 +450,47 @@ int ServerBtSubscriber (int argc, char *argv[])
           cout << "    hostname: "
                << msgList[j].messages[i].hostName << endl;
 
-          // Veritabanına kaydetme işlemi gerçekleştiriliyor
-          mongo::BSONObjBuilder b;
-          mongo::StatusWith<mongo::Date_t> now  =
-              mongo::dateFromISOString
-              (mongo::timeToISOString
-               (static_cast<time_t>(info->reception_timestamp.sec)));
-          b.append("timestamp", now.getValue() );
-          b.append("hostname", msgList[j].messages[0].hostName);
-          b.append("devid", msgList[j].messages[i].devID );
-          b.append("dbm", msgList[j].messages[i].dbm );
-          b.append("type","BT"); /*EAX: Bluetooth Type, Wifi Type, BLE Type */
-          mongo::BSONObj p = b.obj();
-          c.insert("inovasyon.konsens",p);
+          MyMap[(String)msgList[j].messages[i].devID] = double_t(msgList[j].messages[i].dbm);
+
+        }
+        // Veritabanına kaydetme işlemi gerçekleştiriliyor
+        if(MyMap.size()>0){
+          MyIterMap = MyMap.begin();
+          std::cout << "Map yazdiriliyor "<<std::endl;
+
+             mongo::BSONObjBuilder b;
+             mongo::StatusWith<mongo::Date_t> now  =
+                 mongo::dateFromISOString
+                 (mongo::timeToISOString
+                  (static_cast<time_t>(info->reception_timestamp.sec)));
+             int REF_POINT=-1;
+             double POSITION_X=-1;
+             double POSITION_Y=-1;
+             double POSITION_FLOOR=-1;
+             double BATTERY=-1;
+             b.append("REF_POINT", REF_POINT);
+             b.append("DATE", now.getValue() );
+             b.append("DEVICE_ID",msgList[j].messages[0].hostName);
+             b.append("POSITION_X", POSITION_X);
+             b.append("POSITION_Y", POSITION_Y);
+             b.append("POSITION_FLOOR", POSITION_FLOOR);
+             b.append("BATTERY", BATTERY);
+             while(MyIterMap != MyMap.end() ) {
+                 std::string key = (*MyIterMap).first;
+                 std::cout << "Key: " << key << ", Value: " << MyMap[key] <<std::endl;
+                 b.append(key,MyMap[key]);
+                 MyIterMap++;
+             }
+             MyMap.clear();
+     //        b.append("type","WiFi"); /*EAX: Bluetooth Type, Wifi Type, BLE Type */
+             mongo::BSONObj p = b.obj();
+             c.insert("inovasyon.bt",p);
         }
 
-
       }
+
+
+
 
       else
         cout << "Invalid data!" << endl;
