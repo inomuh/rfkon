@@ -14,7 +14,7 @@
     %% Load train mf data
     % filenameTrainMF: train mf data file name
     % pathnameTrainMF: train mf data path name
-    [filenameTrainMF,pathnameTrainMF]=uigetfile({'*.csv'},'MF Train File Selector','D:\RFKON_UB_SB\src\M7_Likelihood_MF_MeanTest_v1.0\datasets\MF');
+    [filenameTrainMF,pathnameTrainMF]=uigetfile({'*.csv'},'MF Train File Selector','./datasets/MF');
     % trainTmp_mf_path: a file path name of mf train data for xlsread function
     trainTmp_mf_path=strcat(pathnameTrainMF,filenameTrainMF);
     temp_train_mf_data=csvread(trainTmp_mf_path,1,0);
@@ -37,7 +37,7 @@
     % pathnameTestMF: test mf data path name
     % testTmp_mf_path: a file path name of mf train data for xlsread function
 
-    [filenameTestMF,pathnameTestMF]=uigetfile({'*.csv'},'MF Test File Selector','D:\RFKON_UB_SB\src\M7_Likelihood_MF_MeanTest_v1.0\datasets\MF');
+    [filenameTestMF,pathnameTestMF]=uigetfile({'*.csv'},'MF Test File Selector','./datasets/MF');
     testTmp_mf_path=strcat(pathnameTestMF,filenameTestMF);
     test_mf=csvread(testTmp_mf_path,1,0);
     cn=test_mf(1,size(test_mf,2));

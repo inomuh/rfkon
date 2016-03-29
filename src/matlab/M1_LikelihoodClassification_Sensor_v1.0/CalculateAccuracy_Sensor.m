@@ -14,20 +14,12 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
 %     end
     %% not calibrated mf data
     test_mf=testTmp_mf(:,1:3);
-
-
-%     save test_mf
-%     xlswrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_v1.0\RotatedOnTheTableMF.xlsx',test_mf);
-
-    
-%     C = calibrated_mf([0; 0; 85.27], testTmp_mf(1,:)');
-%     test_mf = [test_mf; C'];
     
     %%
     [rowTestWiFiData columnTestWiFiData]=size(test_wifi);
     predictedArray=zeros(rowTestWiFiData,2);
-    %nm: likelihood fonksiyonunu kullanarak her bir test datanýn tüm mean'i
-    %hesaplanmýþ train datalarýn birbirleriyle olan olasýlýklarýný hesaplýyor
+    %nm: likelihood fonksiyonunu kullanarak her bir test datanï¿½n tï¿½m mean'i
+    %hesaplanmï¿½ï¿½ train datalarï¿½n birbirleriyle olan olasï¿½lï¿½klarï¿½nï¿½ hesaplï¿½yor
     nm_wifi=zeros(size(test_wifi,1),refPointNumber);
     nm_mf=zeros(size(test_wifi,1),refPointNumber);
     %confusion_matrix: weka'daki confusion matrix
@@ -41,7 +33,7 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
             B=BB';
             I=II';
             tmp=B;
-            %testmean_sorted: sýralanmýþ elemanlardan nan olmayanlarý alýr
+            %testmean_sorted: sï¿½ralanmï¿½ï¿½ elemanlardan nan olmayanlarï¿½ alï¿½r
             %testmean_sorted_index: testmean_sorted indexlerini tutuyor
             test_sorted_wifi=B(~isnan(B));
             test_sorted_index_wifi=I(:,1:length(test_sorted_wifi));
@@ -66,7 +58,7 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
             class_wifi=test_wifi(index,columnTestWiFiData);
             maxIndex_wifi=find(nm_wifi(index,:)==max(nm_wifi(index,:)))
 
-            %%%%%%%% Manyetik Alan ile konumlandýrma doðruluðunu iyileþtirme  %%%%%%%%
+            %%%%%%%% Manyetik Alan ile konumlandï¿½rma doï¿½ruluï¿½unu iyileï¿½tirme  %%%%%%%%
 
             predicted_refpoint_using_wifi=maxIndex_wifi;
 
@@ -111,8 +103,8 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
             predictedArray(index,1)=predicted_index_using_mf;
             predictedArray(index,2)=class_wifi;
         end
-        csvwrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\predictedArray_WiFi_MF.csv',predictedArray);
-        csvwrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\confusionMatrix_WiFi_MF.csv',confusion_matrix);
+        csvwrite('predictedArray_WiFi_MF.csv',predictedArray);
+        csvwrite('confusionMatrix_WiFi_MF.csv',confusion_matrix);
         sumTotal=sum(confusion_matrix(:));
         sumDiagonal=sum(diag(confusion_matrix));
         accuracy_WiFi_MF=sumDiagonal/sumTotal*100;
@@ -126,7 +118,7 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
             B=BB';
             I=II';
             tmp=B;
-            %testmean_sorted: sýralanmýþ elemanlardan nan olmayanlarý alýr
+            %testmean_sorted: sï¿½ralanmï¿½ï¿½ elemanlardan nan olmayanlarï¿½ alï¿½r
             %testmean_sorted_index: testmean_sorted indexlerini tutuyor
             test_sorted_wifi=B(~isnan(B));
             test_sorted_index_wifi=I(:,1:length(test_sorted_wifi));
@@ -164,8 +156,8 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
             predictedArray(index,1)=maxIndex_wifi;
             predictedArray(index,2)=class_wifi;
         end
-        xlswrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\predictedArray_WiFi.xlsx',predictedArray);
-        xlswrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\confusionMatrix_WiFi.xlsx',confusion_matrix);
+        csvwrite('predictedArray_WiFi.csv',predictedArray);
+        csvwrite('confusionMatrix_WiFi.csv',confusion_matrix);
         sumTotal=sum(confusion_matrix(:));
         sumDiagonal=sum(diag(confusion_matrix));
         accuracy_WiFi=sumDiagonal/sumTotal*100;
@@ -202,8 +194,8 @@ function CalculateAccuracy_Sensor(testTmp_wifi,testTmp_mf,database,WiFi,MF,WiFi_
             predictedArray(index,1)=predicted_index_using_mf;
             predictedArray(index,2)=testTmp_mf(index,size(testTmp_mf,2));
         end
-        xlswrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\predictedArray_MF_wthRotate.xlsx',predictedArray);
-        xlswrite('D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\confusionMatrix_MF_wthRotate.xlsx',confusion_matrix);
+        csvwrite('predictedArray_MF.csv',predictedArray);
+        csvwrite('confusionMatrix_MF.csv',confusion_matrix);
         sumTotal=sum(confusion_matrix(:));
         sumDiagonal=sum(diag(confusion_matrix));
         accuracy_MF=sumDiagonal/sumTotal*100;

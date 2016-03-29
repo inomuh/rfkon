@@ -48,8 +48,8 @@ function CalculateAccuracy_Sensor(testTmp_mf,database)
         predictedArray(index,2)=testTmp_mf(index,size(test_mf,2));
         end
     end
-    xlswrite('D:\RFKON_UB_SB\src\M6_Likelihood_MF_MeanTest_v1.0\predictedArray_MF_wthRotate.xlsx',predictedArray);
-    xlswrite('D:\RFKON_UB_SB\src\M6_Likelihood_MF_MeanTest_v1.0\confusionMatrix_MF_wthRotate.xlsx',confusion_matrix);
+    csvwrite('predictedArray_MF.xlsx',predictedArray);
+    csvwrite('confusionMatrix_MF.xlsx',confusion_matrix);
     sumTotal=sum(confusion_matrix(:));
     sumDiagonal=sum(diag(confusion_matrix));
     accuracy_MF=sumDiagonal/sumTotal*100;

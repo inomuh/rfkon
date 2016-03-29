@@ -9,8 +9,8 @@ function CalculateAccuracy_Sensor(testTmp_wifi,database,trainTmp_wifi)
     %%
     [rowTestWiFiData columnTestWiFiData]=size(test_wifi);
     predictedArray=zeros(rowTestWiFiData,2);
-    %nm: likelihood fonksiyonunu kullanarak her bir test datanýn tüm mean'i
-    %hesaplanmýþ train datalarýn birbirleriyle olan olasýlýklarýný hesaplýyor
+    %nm: likelihood fonksiyonunu kullanarak her bir test datanï¿½n tï¿½m mean'i
+    %hesaplanmï¿½ï¿½ train datalarï¿½n birbirleriyle olan olasï¿½lï¿½klarï¿½nï¿½ hesaplï¿½yor
     nm_wifi=zeros(size(test_wifi,1),refPointNumber);
     nm_mf=zeros(size(test_wifi,1),refPointNumber);
     %confusion_matrix: weka'daki confusion matrix
@@ -22,7 +22,7 @@ function CalculateAccuracy_Sensor(testTmp_wifi,database,trainTmp_wifi)
         B=BB';
         I=II';
         tmp=B;
-        %testmean_sorted: sýralanmýþ elemanlardan nan olmayanlarý alýr
+        %testmean_sorted: sï¿½ralanmï¿½ï¿½ elemanlardan nan olmayanlarï¿½ alï¿½r
         %testmean_sorted_index: testmean_sorted indexlerini tutuyor
         test_sorted_wifi=B(~isnan(B));
         test_sorted_index_wifi=I(:,1:length(test_sorted_wifi));
@@ -60,8 +60,8 @@ function CalculateAccuracy_Sensor(testTmp_wifi,database,trainTmp_wifi)
         predictedArray(index,1)=maxIndex_wifi;
         predictedArray(index,2)=class_wifi;
     end
-    xlswrite('D:\RFKON_UB_SB\src\M2_Likelihood_WiFi_AllTest_v1.0\predictedArray_WiFi.xlsx',predictedArray);
-    xlswrite('D:\RFKON_UB_SB\src\M2_Likelihood_WiFi_AllTest_v1.0\confusionMatrix_WiFi.xlsx',confusion_matrix);
+    csvwrite('predictedArray_WiFi.csv',predictedArray);
+    csvwrite('confusionMatrix_WiFi.csv',confusion_matrix);
     sumTotal=sum(confusion_matrix(:));
     sumDiagonal=sum(diag(confusion_matrix));
     accuracy_WiFi=sumDiagonal/sumTotal*100;

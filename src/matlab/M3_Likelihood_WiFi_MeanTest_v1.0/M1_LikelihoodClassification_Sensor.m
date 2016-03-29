@@ -15,7 +15,7 @@ noRefPoints=size(refPointCoordinates,1);
 %% Load train wifi data 
 % filenameTrainWiFi: train wifi data file name
 % pathnameTrainWiFi: train wifi data path name
-[filenameTrainWiFi,pathnameTrainWiFi]=uigetfile({'*.csv'},'WiFi Train File Selector','D:\RFKON_UB_SB\src\M2_Likelihood_WiFi_AllTest_v1.0\datasets\WiFi');
+[filenameTrainWiFi,pathnameTrainWiFi]=uigetfile({'*.csv'},'WiFi Train File Selector','./dataset/WiFi');
 % trainTmp_wifi_path: a file path name of wifi train data for xlsread function
 trainTmp_wifi_path=strcat(pathnameTrainWiFi,filenameTrainWiFi);
 trainTmp_wifi=csvread(trainTmp_wifi_path,1,0);
@@ -38,7 +38,7 @@ database=csvread(trainDatabase_path,0,0);
 % filenameTest: test wifi data file name
 % pathnameTest: test wifi data path name
 % testTmp_wifi_path: a file path name of wifi test data for xlsread function
-[filenameTestWiFi,pathnameTestWiFi]=uigetfile({'*.csv'},'WiFi Test File Selector','D:\RFKON_UB_SB\src\M3_Likelihood_WiFi_MeanTest_v1.0\datasets\WiFi');
+[filenameTestWiFi,pathnameTestWiFi]=uigetfile({'*.csv'},'WiFi Test File Selector','./dataset/WiFi');
 testTmp_wifi_path=strcat(pathnameTestWiFi,filenameTestWiFi);
 test_wifi=csvread(testTmp_wifi_path,1,0);
 

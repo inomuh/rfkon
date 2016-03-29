@@ -14,7 +14,7 @@ function M1_LikelihoodClassification_Sensor(WiFi,MF,WiFi_MF)
     %% Load train wifi data 
     % filenameTrainWiFi: train wifi data file name
     % pathnameTrainWiFi: train wifi data path name
-    [filenameTrainWiFi,pathnameTrainWiFi]=uigetfile({'*.csv'},'WiFi Train File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\datasets\WiFi');
+    [filenameTrainWiFi,pathnameTrainWiFi]=uigetfile({'*.csv'},'WiFi Train File Selector','./datasets/WiFi');
     % trainTmp_wifi_path: a file path name of wifi train data for xlsread function
     trainTmp_wifi_path=strcat(pathnameTrainWiFi,filenameTrainWiFi);
     trainTmp_wifi=csvread(trainTmp_wifi_path,1,0);
@@ -22,7 +22,7 @@ function M1_LikelihoodClassification_Sensor(WiFi,MF,WiFi_MF)
     %% Load train mf data
     % filenameTrainMF: train mf data file name
     % pathnameTrainMF: train mf data path name
-    [filenameTrainMF,pathnameTrainMF]=uigetfile({'*.csv'},'MF Train File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\datasets\MF');
+    [filenameTrainMF,pathnameTrainMF]=uigetfile({'*.csv'},'MF Train File Selector','./datasets/MF');
     % trainTmp_mf_path: a file path name of mf train data for xlsread function
     trainTmp_mf_path=strcat(pathnameTrainMF,filenameTrainMF);
     temp_train_mf_data=csvread(trainTmp_mf_path,1,0);
@@ -43,7 +43,7 @@ function M1_LikelihoodClassification_Sensor(WiFi,MF,WiFi_MF)
      %% Load test wifi data
     % filenameTest: test wifi data file name
     % pathnameTest: test wifi data path name
-    [filenameTest,pathnameTest]=uigetfile({'*.csv'},'WiFi Test File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\datasets\WiFi');
+    [filenameTest,pathnameTest]=uigetfile({'*.csv'},'WiFi Test File Selector','./datasets/WiFi');
     % testTmp_wifi_path: a file path name of wifi test data for xlsread function
     testTmp_wifi_path=strcat(pathnameTest,filenameTest);
     testTmp_wifi=csvread(testTmp_wifi_path,1,0);
@@ -51,7 +51,7 @@ function M1_LikelihoodClassification_Sensor(WiFi,MF,WiFi_MF)
     %% Load test mf data
     % filenameTestMF: test mf data fileame
     % pathnameTestMF: test mf data path name
-    [filenameTestMF,pathnameTestMF]=uigetfile({'*.csv'},'MF Test File Selector','D:\RFKON_UB_SB\src\M1_LikelihoodClassification_Sensor_v1.0\datasets\MF');
+    [filenameTestMF,pathnameTestMF]=uigetfile({'*.csv'},'MF Test File Selector','./datasets/MF');
     % testTmp_mf_path: a file path name of mf train data for xlsread function
     testTmp_mf_path=strcat(pathnameTestMF,filenameTestMF);
     testTmp_mf=csvread(testTmp_mf_path,1,0);
