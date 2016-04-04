@@ -4,7 +4,7 @@ Haskon Web Service is created to send the HasKon data collected from evarobot to
 
 ## Prerequisites
 
-Before you compile the source codes, you need to install couple of packages in your linux machine:
+Before you compile the source codes, you need to install and build couple of packages in your linux machine:
 
 1.Boost
 
@@ -20,7 +20,7 @@ sudo apt-get install cmake
 
 3.Casablanca
 
-Note: Your g++ complier has to 4.8 or higher to compile the library
+**Warning**: Your g++ complier version has to be 4.8 or higher to compile the library.
 
 ```
 sudo apt-get install libboost1.54-all-dev libssl-dev
@@ -39,7 +39,7 @@ cd Binaries
 ./test_runner *_test.so
 ```
 
-Then, install the library globally
+If nothing is wrong about the Casablanca, you can now install the library globally on your system 
 ```
 sudo make install
 ```
