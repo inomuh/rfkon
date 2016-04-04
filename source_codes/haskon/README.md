@@ -9,7 +9,7 @@ Before you compile the source codes, you need to install and build couple of pac
 1.Boost
 
 ```
-sudo apt-get install libboost-all-dev
+sudo apt-get install libboost1.54-all-dev
 ```
 
 2.Cmake
@@ -23,7 +23,7 @@ sudo apt-get install cmake
 **Warning**: Your g++ complier version has to be 4.8 or higher to compile the library.
 
 ```
-sudo apt-get install libboost1.54-all-dev libssl-dev
+sudo apt-get install libssl-dev
 git clone https://github.com/Microsoft/cpprestsdk.git casablanca
 cd casablanca/Release
 mkdir build.debug
