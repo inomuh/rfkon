@@ -60,6 +60,7 @@ cd rfkon/source_codes/haskon
 mkdir build
 cd build
 cmake ..
+make
 ```
 
 
