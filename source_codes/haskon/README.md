@@ -17,10 +17,26 @@ sudo apt-get install libboost1.54-all-dev
 ```
 sudo apt-get install cmake
 ```
+3.gcc and g++ compliers
 
-3.Casablanca
+**Warning**: Your g++ complier version has to be 5 or higher to compile the library. If not, follow these commands:
 
-**Warning**: Your g++ complier version has to be 4.8 or higher to compile the library.
+```
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get install gcc-5 g++-5
+sudo update-alternatives --remove-all gcc
+sudo update-alternatives --remove-all g++
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 50
+```
+
+And to check your version
+```
+g++ --version
+```
+
+4.Casablanca
 
 ```
 sudo apt-get install libssl-dev
@@ -47,7 +63,7 @@ sudo make install
 if you have any problems about the casablanca, you check their github respository:
 [Casablanca](https://github.com/Microsoft/cpprestsdk)
 
-4.Json library
+5.Json library
 
 [Extremely simple JSON](http://www.codeproject.com/Articles/856277/ESJ-Extremely-Simple-JSON-for-Cplusplus) is already included in the project, so you don't have to do anything.
 
