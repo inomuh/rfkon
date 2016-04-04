@@ -6,19 +6,19 @@ Haskon Web Service is created to send the HasKon data collected from evarobot to
 
 Before you compile the source codes, you need to install couple of packages in your linux machine:
 
-### 1.Boost
+1.Boost
 
 ```
 sudo apt-get install libboost-all-dev
 ```
 
-### 2.Cmake
+2.Cmake
 
 ```
 sudo apt-get install cmake
 ```
 
-### 3.Casablanca
+3.Casablanca
 
 Note: Your g++ complier has to 4.8 or higher to compile the library
 
@@ -47,7 +47,7 @@ sudo make install
 if you have any problems about the casablanca, you check their github respository:
 [Casablanca](https://github.com/Microsoft/cpprestsdk)
 
-### 4.Json library
+4.Json library
 
 Extremely simple JSON library is already included in the project, so you don't have to do anything.
 
