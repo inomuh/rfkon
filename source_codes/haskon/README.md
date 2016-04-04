@@ -49,7 +49,7 @@ if you have any problems about the casablanca, you check their github respositor
 
 4.Json library
 
-Extremely simple JSON library is already included in the project, so you don't have to do anything.
+[Extremely simple JSON](http://www.codeproject.com/Articles/856277/ESJ-Extremely-Simple-JSON-for-Cplusplus) is already included in the project, so you don't have to do anything.
 
 
 ## Compilation
