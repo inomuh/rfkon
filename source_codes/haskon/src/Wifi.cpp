@@ -42,14 +42,14 @@ void Wifi::scanWifi()
     vector< int >                           signalStrengthHolder;
 
     // writing the scan into wifi.txt file
-    system( "iwlist wlan1 scanning >> wifi.txt" );
+    system( "sudo iwlist wlan1 scanning >> wifi.txt" );
 
     // reading and saving the wifi.txt file into a stream
     fInWifiScan.open( "wifi.txt",ios::in );
     stringstream ssWifi;
     ssWifi << fInWifiScan.rdbuf();
     wifiFileContenHolder = ssWifi.str();
-    system( "rm wifi.txt" );
+    system( "sudo rm wifi.txt" );
 
 
     try

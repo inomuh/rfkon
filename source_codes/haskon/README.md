@@ -77,7 +77,6 @@ mkdir build
 cd build
 cmake ..
 make
+sudo ./HasKon_WebService
 ```
-
-
-
+Note: you have to run the application as a root since we scan the Wifi result as a root as well 
