@@ -47,7 +47,6 @@ public:
     // setters
     void setDeviceId( string );
     void setRefPoint( int );
-    void setBattery( int );
     void setTestType( string );
     void setWifi( Wifi );
     void setOdom( Odom );
@@ -57,7 +56,6 @@ public:
     // getters
     string getDeviceId() const;
     int getRefPoint() const;
-    int getBattery() const;
     string getTestType() const;
     Wifi getWifi() const;
     Odom getOdom() const;
@@ -67,7 +65,6 @@ public:
 private:
     string deviceId;
     int refPoint;
-    int battery;
     string testType;
     Odom odom;
     OdomImu odomImu;

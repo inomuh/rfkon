@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Odom::Odom( int poseX, int poseY, int poseZ, int roll, int pitch, int yaw )
+Odom::Odom( double poseX, double poseY, double poseZ, double roll, double pitch, double yaw )
 {
     setPoseX( poseX );
     setPoseY( poseY );
@@ -12,7 +12,7 @@ Odom::Odom( int poseX, int poseY, int poseZ, int roll, int pitch, int yaw )
     setYaw( yaw );
 }
 
-void Odom::setPoseX( int poseX )
+void Odom::setPoseX( double poseX )
 {
     this->poseX = poseX;
 }
@@ -20,7 +20,7 @@ int Odom::getPoseX() const{
     return poseX;
 }
 
-void Odom::setPoseY( int poseY )
+void Odom::setPoseY( double poseY )
 {
     this->poseY = poseY;
 }
@@ -28,7 +28,7 @@ int Odom::getPoseY() const{
     return poseY;
 }
 
-void Odom::setPoseZ( int poseZ )
+void Odom::setPoseZ( double poseZ )
 {
     this->poseZ = poseZ;
 }
@@ -36,7 +36,7 @@ int Odom::getPoseZ() const{
     return poseZ;
 }
 
-void Odom::setRoll( int roll )
+void Odom::setRoll( double roll )
 {
     this->roll = roll;
 }
@@ -44,7 +44,7 @@ int Odom::getRoll() const{
     return roll;
 }
 
-void Odom::setPitch( int pitch )
+void Odom::setPitch( double pitch )
 {
     this->pitch = pitch;
 }
@@ -52,7 +52,7 @@ int Odom::getPitch() const{
     return pitch;
 }
 
-void Odom::setYaw( int yaw )
+void Odom::setYaw( double yaw )
 {
     this->yaw = yaw;
 }

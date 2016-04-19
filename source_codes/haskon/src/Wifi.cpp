@@ -1,14 +1,9 @@
 #include "Wifi.h"
 
 // setters
-void Wifi::setSsid( vector< string > ssid)
+void Wifi::setSsidAndMac( vector< string > ssidAndMac)
 {
-    this->ssid = ssid;
-}
-
-void Wifi::setMac( vector< string > mac)
-{
-    this->mac = mac;
+    this->ssidAndMac = ssidAndMac;
 }
 
 void Wifi::setDbm( vector< int > dbm)
@@ -17,14 +12,11 @@ void Wifi::setDbm( vector< int > dbm)
 }
 
 // getters
-vector< string > Wifi::getSsid() const
+vector< string > Wifi::getSsidAndMac() const
 {
-    return ssid;
+    return ssidAndMac;
 }
-vector< string > Wifi::getMac() const
-{
-    return mac;
-}
+
 vector< int > Wifi::getDbm() const
 {
     return dbm;
@@ -37,6 +29,7 @@ void Wifi::scanWifi()
     // Wifi scan results holders
     boost::filesystem::ifstream             fInWifiScan;
     string                                  wifiFileContenHolder;
+    vector< string >                        ssidAndMacHolder;
     vector< string >                        ssidHolder;
     vector< string >                        macAddressHolder;
     vector< int >                           signalStrengthHolder;
@@ -48,9 +41,10 @@ void Wifi::scanWifi()
     fInWifiScan.open( "wifi.txt",ios::in );
     stringstream ssWifi;
     ssWifi << fInWifiScan.rdbuf();
-    wifiFileContenHolder = ssWifi.str();
-    system( "sudo rm wifi.txt" );
 
+    wifiFileContenHolder = ssWifi.str();
+
+    system( "sudo rm wifi.txt" );
 
     try
     {
@@ -98,14 +92,14 @@ void Wifi::scanWifi()
         }
 
         // saving scan results into the holders
-        for(int i = 0; i < macAddressHolder.size(); i++)
+        for(int i = 0; i < ssidHolder.size(); i++)
         {
-            cout << "SSID: " << ssidHolder[ i ] << endl;
-            cout << "MAC Address: " << macAddressHolder[ i ] << endl;
+            cout << "SSID: " << ssidHolder[ i ] << "(" << macAddressHolder[ i ] << ")" << endl;
+            ssidAndMacHolder.push_back( ssidHolder[ i ] + "(" + macAddressHolder[ i ] + ")" );
             cout << "dBm: " << signalStrengthHolder[ i ] << endl;
+
         }
-        setSsid(ssidHolder);
-        setMac(macAddressHolder);
+        setSsidAndMac(ssidAndMacHolder);
         setDbm(signalStrengthHolder);
 
     }
@@ -122,8 +116,7 @@ void Wifi::serialize( JSON::Adapter& adapter )
     JSON::Class root( adapter, "wifis" );
 
     // Use the _E variant to able to add more instance
-    JSON_E( adapter, ssid );
-    JSON_E( adapter, mac );
+    JSON_E( adapter, ssidAndMac );
     // this is the last member variable we serialize so use the _T variant
     JSON_T( adapter, dbm );
 }

@@ -3,7 +3,6 @@
 Haskon::Haskon()
 {
     setDeviceId( "evarobot" ) ;
-    setBattery( -1 );
     setRefPoint( 0 );
     setTestType( "Robot Mode" );
 }
@@ -21,10 +20,7 @@ void Haskon::setRefPoint( int refPoint )
 {
     this->refPoint = refPoint;
 }
-void Haskon::setBattery( int battery )
-{
-    this->battery = battery;
-}
+
 void Haskon::setTestType( string testType )
 {
     this->testType = testType;
@@ -32,10 +28,6 @@ void Haskon::setTestType( string testType )
 int Haskon::getRefPoint() const
 {
     return refPoint;
-}
-int Haskon::getBattery() const
-{
-    return battery;
 }
 string Haskon::getTestType() const
 {
@@ -65,7 +57,7 @@ OdomImu Haskon::getOdomImu() const
 {
     return odomImu;
 }
-void Haskon::setOdomImuLidar( OdomImuLidar odomImu )
+void Haskon::setOdomImuLidar( OdomImuLidar odomImuLidar )
 {
     this->odomImuLidar = odomImuLidar;
 }
@@ -111,7 +103,7 @@ pplx::task<void> Haskon::postToKonsens( string jsonString )
         http_client client( U( "http://192.168.4.1:8080/" ) );
 
         // building request URI and start the request.
-        uri_builder builder( U( "/TestDataCollector_V1.0/rest/testdata/json" ) );
+        uri_builder builder( U( "/RfkonWebService/GezkonDataFetcher/postHaskon" ) );
 
         // creating a POST request and configuring with the URI and the haskonCasablancaObject
         http_request request( methods::POST );
@@ -130,6 +122,7 @@ pplx::task<void> Haskon::postToKonsens( string jsonString )
         }
         else
         {
+            cout << "Received response status code: " << response.status_code() << endl;
             cout << "Something went wrong with the Web Service request" << endl;
         }
 
@@ -146,7 +139,6 @@ void Haskon::serialize( JSON::Adapter& adapter )
     // Use the _E variant to able to add more instance
     JSON_E( adapter, deviceId );
     JSON_E( adapter, refPoint );
-    JSON_E( adapter, battery );
     JSON_E( adapter, testType );
     JSON_E( adapter, wifi );
     JSON_E( adapter, odom );

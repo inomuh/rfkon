@@ -1,6 +1,6 @@
 #include "OdomImu.h"
 
-OdomImu::OdomImu( int poseX, int poseY, int poseZ, int roll, int pitch, int yaw )
+OdomImu::OdomImu( double poseX, double poseY, double poseZ, double roll, double pitch, double yaw )
 {
     setPoseX( poseX );
     setPoseY( poseY );

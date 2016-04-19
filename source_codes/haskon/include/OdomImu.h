@@ -6,7 +6,7 @@
 class OdomImu : public Odom
 {
 public:
-    OdomImu( int = 0, int = 0, int = 0 , int = 0, int = 0, int = 0 );
+    OdomImu( double = 0, double = 0, double = 0 , double = 0, double = 0, double = 0 );
 
     // each class requires a public serialize function
     virtual void serialize( JSON::Adapter& );

@@ -1,6 +1,6 @@
 #include "OdomImuLidar.h"
 
-OdomImuLidar::OdomImuLidar( int poseX, int poseY, int poseZ, int roll, int pitch, int yaw, int covarianceXy, int covarianceYaw )
+OdomImuLidar::OdomImuLidar( double poseX, double poseY, double poseZ, double roll, double pitch, double yaw, double covarianceXy, double covarianceYaw )
 {
     setPoseX( poseX );
     setPoseY( poseY );
@@ -13,12 +13,12 @@ OdomImuLidar::OdomImuLidar( int poseX, int poseY, int poseZ, int roll, int pitch
 }
 
 // setters
-void OdomImuLidar::setCovarianceXy( int covarianceXy )
+void OdomImuLidar::setCovarianceXy( double covarianceXy )
 {
     this->covarianceXy = covarianceXy;
 }
 
-void OdomImuLidar::setCovarianceYaw( int )
+void OdomImuLidar::setCovarianceYaw( double covarianceYaw )
 {
     this->covarianceYaw = covarianceYaw;
 }

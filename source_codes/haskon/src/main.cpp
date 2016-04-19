@@ -1,4 +1,5 @@
 #include "Haskon.h"
+#include <unistd.h>
 
 using namespace utility;                    // Common utilities like string conversions
 using namespace web;                        // Common features like URIs.
@@ -11,6 +12,10 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+
+//    for(int i = 0; i < 40; i++)
+//    {
+
     Haskon haskon;
     Odom odom( 1, 1, 1, 1, 1, 1 );
     OdomImu odomImu ( 5, 5, 5, 5, 5, 5);
@@ -24,10 +29,13 @@ int main(int argc, char* argv[])
     haskon.setOdomImu( odomImu );
     haskon.setOdomImuLidar( odomImuLidar );
 
+
     // converting haskon object into JSON formatted string
     string haskonJsonString = JSON::producer< Haskon >::convert( haskon );
     // passing the haskon json string to the Web Service handler
     haskon.postToKonsens( haskonJsonString ).wait();
+
+//}
 
     return 0;
 }

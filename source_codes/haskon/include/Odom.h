@@ -17,18 +17,18 @@ using namespace std;
 class Odom
 {
 public:
-    Odom( int = 0, int = 0, int = 0 , int = 0, int = 0, int = 0 );
+    Odom( double = 0, double = 0, double = 0 , double = 0, double = 0, double = 0 );
 
     // each class requires a public serialize function
     virtual void serialize( JSON::Adapter& );
 
     // setters
-    void setPoseX( int );
-    void setPoseY( int );
-    void setPoseZ( int );
-    void setRoll( int );
-    void setPitch( int );
-    void setYaw( int );
+    void setPoseX( double );
+    void setPoseY( double );
+    void setPoseZ( double );
+    void setRoll( double );
+    void setPitch( double );
+    void setYaw( double );
 
 
     // getters

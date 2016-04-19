@@ -15,6 +15,7 @@ class Wifi;
 #include <sys/time.h>
 #include <fstream>
 #include <sstream>
+#include <unistd.h>
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -35,18 +36,15 @@ public:
     void scanWifi();
 
     // setters
-    void setSsid( vector< string > );
-    void setMac( vector< string > );
+    void setSsidAndMac( vector< string > );
     void setDbm( vector< int > );
 
     // getters
-    vector< string > getSsid() const;
-    vector< string > getMac() const;
+    vector< string > getSsidAndMac() const;
     vector< int > getDbm() const;
 
 private:
-    vector< string > ssid;
-    vector< string > mac;
+    vector< string > ssidAndMac;
     vector< int > dbm;
 
 };
