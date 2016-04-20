@@ -103,7 +103,7 @@ pplx::task<void> Haskon::postToKonsens( string jsonString )
         http_client client( U( "http://192.168.4.1:8080/" ) );
 
         // building request URI and start the request.
-        uri_builder builder( U( "/RfkonWebService/GezkonDataFetcher/postHaskon" ) );
+        uri_builder builder( U( "/RfkonWebService/RfkonDataFetcher/postHaskon" ) );
 
         // creating a POST request and configuring with the URI and the haskonCasablancaObject
         http_request request( methods::POST );
